@@ -1,7 +1,9 @@
+from Core import Core
+
 
 # Main function
 def main():
-    return
+    core : Core = Core()
 
 if __name__ == "__main__":
     main()
