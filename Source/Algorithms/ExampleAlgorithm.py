@@ -1,5 +1,5 @@
 from Algorithm import Algorithm
-from Data import Data
+from Data import Data, Statistics
 from copy import copy
 
 class ExampleAlgorithm(Algorithm):
@@ -15,6 +15,6 @@ class ExampleAlgorithm(Algorithm):
         new_data : Data = copy(input_data)
         
         # Modifies data somehow
-        # new_data.matrix = list[list]
+        # new_data.matrix = list()
         
         return new_data
