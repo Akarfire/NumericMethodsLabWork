@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 
 class DegradationMode(Enum):
@@ -24,8 +24,8 @@ class Input:
     experiment_count : int = 100
     
     use_individual_ranges : bool = False
-    individual_a_ranges : list[list[float, float]] = list()
-    individual_b_ranges : list[list[float, float]] = list()
+    individual_a_ranges : list[list[float, float]] = field(default_factory=list)
+    individual_b_ranges : list[list[float, float]] = field(default_factory=list)
     
     # Additional Algorithm Data
     greedy_thrifty_stages : int = 5
