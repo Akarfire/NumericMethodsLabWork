@@ -33,7 +33,9 @@ class Input:
 
     bkj_stage : int = 5
     bkj_rank : int = 2
-    
+
+    ctg_stage : int = 5
+
     # Non-organics
     use_non_organics : bool = False
     
