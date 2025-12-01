@@ -1,9 +1,11 @@
 from enum import Enum
 
+
 class AlgorithmNames(Enum):
-    
+
+    HUNGARIAN = 0
     GREEDY = 1
     THRIFTY = 2
     GREEDY_THRIFTY = 3
     THRIFTY_GREEDY = 4
-    BKJ = 5
+    BkJ = 5

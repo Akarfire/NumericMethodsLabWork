@@ -17,9 +17,10 @@ class Data:
     experiment_count : int = 100
     
     # Additional Algorithm Data
-    greedy_thrifty_stages : int = 5
-    thrifty_greedy_stages : int = 5
-    
+    greedy_thrifty_stage : int = 5
+    thrifty_greedy_stage : int = 5
+
+    bkj_stage : int = 5
     bkj_rank : int = 2
     
     # Data entries
