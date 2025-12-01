@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 
 const { spawn } = require('child_process');
 const path = require('path');
@@ -6,6 +6,16 @@ const path = require('path');
 
 let ui_backend;
 
+function debugMessage(message)
+{
+    console.log("PYTHON:", message);
+    // dialog.showMessageBox({
+    //     type: 'info',
+    //     title: 'PYTHON',
+    //     message: message,
+    //     buttons: ['OK']
+    // });
+}
 
 function runEmbeddedPython(script, args = []) 
 {
@@ -16,7 +26,7 @@ function runEmbeddedPython(script, args = [])
         // Using packaged python file paths inside resources/
         pythonExe = path.join(process.resourcesPath, "python", "python.exe");
         scriptPath = path.join(process.resourcesPath, "python-src", script);
-        pythonDir = path.join(process.resourcesPath, 'python-src');
+        pythonDir = path.join(process.resourcesPath, "python-src");
     } 
 
     else 
@@ -29,19 +39,19 @@ function runEmbeddedPython(script, args = [])
 
     const py = spawn(pythonExe, [scriptPath, ...args], { shell: true, cwd: pythonDir });
 
-    py.stdout.on('data', data => {
-        console.log("PYTHON:", data.toString());
+    py.stdout.on("data", data => {
+        debugMessage(data.toString());
     });
 
-    py.stderr.on('data', data => {
-        console.error("PYTHON ERROR:", data.toString());
+    py.stderr.on("data", data => {
+        debugMessage(data.toString());
     });
 
-    py.on('exit', code => {
-        console.log("Python exited with code:", code);
+    py.on("exit", code => {
+        debugMessage(code.toString());
     });
 
-    return py
+    return py;
 }
 
 function createWindow() 
@@ -56,7 +66,11 @@ function createWindow()
     });
 
     // Loading UI
-    win.loadFile('../UI/NumericLab.html');
+    let ui_file;
+    if (app.isPackaged) ui_file = path.join(process.resourcesPath, "ui", "NumericLab.html");
+    else ui_file = path.join(__dirname, "..", "UI", "NumericLab.html");
+
+    win.loadFile(ui_file);
 
     // Running Core
     ui_backend = runEmbeddedPython("Main.py");
@@ -65,11 +79,9 @@ function createWindow()
 app.whenReady().then(() => {
     createWindow();
 
-    app.on('activate', () => {
+    app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
 });
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
-});
+app.on("window-all-closed", () => { app.quit(); });
