@@ -1,0 +1,30 @@
+#content-container 
+{
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#options-container
+{
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+
+    height: 100%;
+    background-color: #7b7b7b;
+}
+
+#content-divider
+{
+    width: 5px;
+    background-color: #aaa;
+    cursor: col-resize;
+    user-select: none;
+}
+
+#results-container
+{
+    height: 100%;
+    background: #343434;
+}
