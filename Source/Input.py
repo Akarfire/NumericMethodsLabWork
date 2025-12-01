@@ -24,13 +24,14 @@ class Input:
     experiment_count : int = 100
     
     use_individual_ranges : bool = False
-    individual_a_ranges : list[list[float, float]] = None
-    individual_b_ranges : list[list[float, float]] = None
+    individual_a_ranges : list[list[float, float]] = field(default_factory=list)
+    individual_b_ranges : list[list[float, float]] = field(default_factory=list)
     
     # Additional Algorithm Data
-    greedy_thrifty_stages : int = 5
-    thrifty_greedy_stages : int = 5
-    
+    greedy_thrifty_stage : int = 5
+    thrifty_greedy_stage : int = 5
+
+    bkj_stage : int = 5
     bkj_rank : int = 2
     
     # Non-organics

@@ -1,13 +1,13 @@
 from Data import Data, Statistics
 from AlgorithmNames import AlgorithmNames
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 
 @dataclass
 class Results:
     
     # Some results that are going to be sent back to the UI for display
-    statistics : Statistics = None
+    statistics : Statistics = field(default_factory=Statistics)
     
     best_strategy : AlgorithmNames = AlgorithmNames.GREEDY
     worst_strategy : AlgorithmNames = AlgorithmNames.GREEDY
