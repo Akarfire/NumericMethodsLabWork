@@ -184,3 +184,9 @@ cython_debug/
 **\obsidian
 **.code-workspace
 /Excalidraw
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/NumericMethodsLabWork.iml
+.idea/vcs.xml
