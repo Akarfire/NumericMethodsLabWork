@@ -4,7 +4,7 @@ from AlgorithmNames import AlgorithmNames
 @dataclass
 class Statistics:
     
-    sugarity_data_per_algorithm : dict[AlgorithmNames, list[float]] = field(default_factory=dict)
+    sugarity_data_per_algorithm : dict[AlgorithmNames, list[float]] = None
     
 
 # Contains all runtime data that needs to be transfered between stages
@@ -23,6 +23,6 @@ class Data:
     bkj_rank : int = 2
     
     # Data entries
-    matrix : list[list] = field(default_factory=list)
+    matrix : list[list] = None
     
-    statistics : Statistics = Statistics()
+    statistics : Statistics = None

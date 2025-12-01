@@ -7,7 +7,7 @@ from dataclasses import dataclass, asdict
 class Results:
     
     # Some results that are going to be sent back to the UI for display
-    statistics : Statistics = Statistics()
+    statistics : Statistics = None
     
     best_strategy : AlgorithmNames = AlgorithmNames.GREEDY
     worst_strategy : AlgorithmNames = AlgorithmNames.GREEDY

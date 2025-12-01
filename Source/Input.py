@@ -24,8 +24,8 @@ class Input:
     experiment_count : int = 100
     
     use_individual_ranges : bool = False
-    individual_a_ranges : list[list[float, float]] = field(default_factory=list)
-    individual_b_ranges : list[list[float, float]] = field(default_factory=list)
+    individual_a_ranges : list[list[float, float]] = None
+    individual_b_ranges : list[list[float, float]] = None
     
     # Additional Algorithm Data
     greedy_thrifty_stages : int = 5
