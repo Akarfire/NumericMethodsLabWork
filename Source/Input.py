@@ -12,10 +12,10 @@ class Input:
     n : int = 15
     m : float = 3000
     
-    a_min : float = 0
-    a_max : float = 1
+    a_min : float = 0.12
+    a_max : float = 0.22
 
-    b_min : float = 0
+    b_min : float = 0.85
     b_max : float = 1
     
     degradation_mode : DegradationMode = DegradationMode.UNIFORM
@@ -37,17 +37,17 @@ class Input:
     # Non-organics
     use_non_organics : bool = False
     
-    k_min : float = 5
-    k_max : float = 7
+    k_min : float = 4.8
+    k_max : float = 7.05
     
     na_min : float = 0.21
     na_max : float = 0.82
     
-    n_min : float = 1.5
+    n_min : float = 1.58
     n_max : float = 2.8
     
-    reduce_min : float = 0
-    reduce_max : float = 1
+    reduce_min : float = 0.62
+    reduce_max : float = 0.64
     
     # Ripening
     use_ripening : bool = False
