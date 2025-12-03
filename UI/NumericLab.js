@@ -19,12 +19,12 @@ let inputData = {
     b_min : 0,
     b_max : 1,
     
-    degradation_mode : DegradationMode.UNIFORM,
+    degradation_mode : "Uniform",
     concentrated_range_fraction : 0.25,
     
     experiment_count : 100,
     
-    use_individual_ranges : False,
+    use_individual_ranges : false,
     individual_a_ranges : Array,
     individual_b_ranges : Array,
     
@@ -36,7 +36,7 @@ let inputData = {
     bkj_rank : 2,
     
     // Non-organics
-    use_non_organics : False,
+    use_non_organics : false,
     
     k_min : 5,
     k_max : 7,
@@ -51,7 +51,7 @@ let inputData = {
     reduce_max : 1,
     
     // Ripening
-    use_ripening : False,
+    use_ripening : false,
     
     ripening_stages : 5,
     
@@ -75,6 +75,8 @@ function onFileLoaded()
 function setupContentSplit()
 {
     const divider = document.getElementById('content-divider');
+    const options_container = document.getElementById('options-container');
+    const content_containertPanel = document.getElementById('results-container');
 
     divider.addEventListener('mousedown', () => {
         isResizingContent = true;
