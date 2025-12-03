@@ -22,7 +22,9 @@ class Data:
 
     bkj_stage : int = 5
     bkj_rank : int = 2
-    
+
+    ctg_stage : int = 5
+
     # Data entries
     matrix : list[list] = field(default_factory=list)
     

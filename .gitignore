@@ -193,3 +193,4 @@ cython_debug/
 .idea/vcs.xml
 
 /Electron/node_modules
+Electron/package-lock.json

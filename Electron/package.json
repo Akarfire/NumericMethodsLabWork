@@ -15,17 +15,14 @@
         "electron": "^39.2.4",
         "electron-reload": "^2.0.0-alpha.1"
     },
-    "dependencies": {
-        
-    },
     "extraResources": [
-    {
-        "from": "python/",
-        "to": "python/"
-    },
-    {
-        "from": "Source/",
-        "to": "python-src/"
-    }
-]
+        {
+            "from": "python/",
+            "to": "python/"
+        },
+        {
+            "from": "Source/",
+            "to": "python-src/"
+        }
+    ]
 }
