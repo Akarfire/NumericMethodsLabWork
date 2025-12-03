@@ -9,3 +9,4 @@ class AlgorithmNames(Enum):
     GREEDY_THRIFTY = 3
     THRIFTY_GREEDY = 4
     BkJ = 5
+    CTG = 6
