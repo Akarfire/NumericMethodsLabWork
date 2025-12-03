@@ -1,3 +1,8 @@
+.bg
+{
+    background-color: #2b2d45;
+}
+
 #content-container 
 {
     display: flex;
@@ -8,17 +13,24 @@
 #options-container
 {
     flex: 1;
+    flex-direction: row;
+
+    display: flex;
+
+    flex-wrap: wrap;
+    gap: 20px;
+
     overflow: auto;
     padding: 10px;
 
-    height: 100%;
-    background-color: #7b7b7b;
+    height: 95vh;
 }
 
 #content-divider
 {
     width: 5px;
-    background-color: #aaa;
+    height: 95vh;
+    background-color: #1d1d1d;
     cursor: col-resize;
     user-select: none;
 }
@@ -26,5 +38,47 @@
 #results-container
 {
     height: 100%;
-    background: #343434;
+}
+
+
+.options-card
+{
+    background: #484b74;
+
+    height: 450px;
+    width: 350px;
+    /* width: 100%;
+    flex: 0, 1, 350px; */
+
+    border-radius: 10px;
+}
+
+.card-title
+{
+    padding: 10px;
+
+    color: white;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.option
+{
+    background: #30324d;
+
+    margin: 20px;
+
+    display: flex;
+    border-radius: 10px;
+}
+
+.option-text
+{
+    padding: 10px;
+
+    color: white;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
 }

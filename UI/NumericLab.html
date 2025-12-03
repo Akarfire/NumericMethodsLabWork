@@ -8,26 +8,61 @@
 
         <link rel="stylesheet" href="NumericLab.css">
         <script type="text/javascript" src="NumericLab.js"></script>
+
     </head>
 
-    <body>
+    <body class="bg">
         
         <div class="tabs-container">
         </div>
 
         <div id="content-container">
             <div id="options-container">
-                <p>daouiuahuthauijhio ahiogth3 uiohuioahio haiohgioa hsiohgioa iog3hioahoiahgashfo oih wioaho</p>
+                
+                <div class="options-card" id="general-card">
+                    <p class="card-title">Основные Настройки</p>
+
+                    <div class="option">
+                        <input type="number" id="n_input">
+                        <p class="option-text">Количество партий</p>
+                    </div>
+                </div>
+
+                <div class="options-card" id="additional-card">
+                    <p class="card-title">Дополнительные Настройки</p>
+
+                    <div class="option">
+                        <input type="checkbox" id="show-additional-options-checkbox">
+                        <p class="option-text">Показать</p>
+                    </div>
+                </div>
+
+                <div class="options-card" id="non-organic-card">
+                    <p class="card-title">Неорганические Вещества</p>
+
+                    <div class="option">
+                        <input type="checkbox" id="use-non-organics-checkbox">
+                        <p class="option-text">Учитывать неорганические в-ва</p>
+                    </div>
+                </div>
+
+                <div class="options-card" id="ripening-card">
+                    <p class="card-title">Дозаривание</p>
+
+                    <div class="option">
+                        <input type="checkbox" id="use-ripening-checkbox">
+                        <p class="option-text">Учитывать дозаривание</p>
+                    </div>
+                </div>
+
             </div>
 
             <div id="content-divider"></div>
 
             <div id="results-container">
-                <p>
-                    aboba biba moba
-                </p>
+                <p></p>
             </div>
-        </div>   
-    </body>
+        </div>
 
+    </body>
 </html>
