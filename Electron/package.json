@@ -1,28 +1,65 @@
 {
-    "name": "electron",
+    "name": "numeric-lab",
+
     "version": "1.0.0",
+
     "description": "",
+
     "main": "main.js",
+
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "electron ."
+        "start": "electron .",
+        "build": "electron-builder"
     },
+
     "keywords": [],
+
     "author": "",
+
     "license": "ISC",
+
     "type": "commonjs",
+
     "devDependencies": {
         "electron": "^39.2.4",
-        "electron-reload": "^2.0.0-alpha.1"
+        "electron-builder": "^26.0.12"
     },
-    "extraResources": [
+
+    "build": {
+      "appId": "com.yourname.numericlab",
+
+      "productName": "NumericLab",
+
+      "files": [
+          "**/*",
+          "python/**",
+          "python-src/**",
+          "ui/**"
+      ],
+
+      "directories": {
+          "buildResources": "assets"
+      },
+
+      "forceCodeSigning": false,
+
+      "win": {
+          "target": ["portable"]
+      },
+
+      "extraResources": [
         {
             "from": "python/",
             "to": "python/"
         },
         {
-            "from": "Source/",
+            "from": "../Source/",
             "to": "python-src/"
+        },
+        {
+            "from": "../UI/",
+            "to": "ui/"
         }
-    ]
+      ]
+    }
 }
