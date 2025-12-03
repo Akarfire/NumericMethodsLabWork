@@ -21,6 +21,7 @@ class Preprocessor:
         data.thrifty_greedy_stage = input_data.thrifty_greedy_stage
         data.bkj_rank = input_data.bkj_rank
         data.bkj_stage = input_data.bkj_stage
+        data.ctg_stage = input_data.ctg_stage
 
         # initial values
         a_values = Preprocessor.generate_initial_values(input_data)
