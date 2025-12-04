@@ -4,7 +4,7 @@ from Data import Data, Statistics
 from copy import copy
 
 
-class GreedyAlgorithm(Algorithm):
+class CTGAlgorithm(Algorithm):
 
     def __init__(self):
         super().__init__()
@@ -52,10 +52,17 @@ def test():
               [4, 4, 4,       4,   4],
               [5, 5, 5234234, 5,   5]]
     data = Data(n=5, ctg_stage=2, matrix=matrix)
-    GreedyAlgorithm.run(data)
+    CTGAlgorithm.run(data)
 
     print(data.statistics.sugarity_data_per_algorithm)
+    prev = 0
+    print("Choosing order: ",end="")
+    for i in data.statistics.sugarity_data_per_algorithm[AlgorithmNames.CTG]:
+        print(i - prev, end=" ")
+        prev = i
+    print()
     print(data.matrix)
 
 
-test()
+if __name__ == "__main__":
+    test()
