@@ -37,10 +37,10 @@ class Preprocessor:
         if (input_data.use_non_organics):
             c_matrix = Preprocessor.generate_non_organics(input_data, c_matrix)
 
-        for i in range(input_data.n):
-            for j in range(input_data.n):
-                print(f"{c_matrix[i][j]:.3f}", end=" ")
-            print("\n")
+        # for i in range(input_data.n):
+        #     for j in range(input_data.n):
+        #         print(f"{c_matrix[i][j]:.3f}", end=" ")
+        #     print("\n")
 
         data.matrix = c_matrix
 

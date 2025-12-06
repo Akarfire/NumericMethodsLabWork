@@ -37,7 +37,7 @@ class Solver:
             start_time = perf_counter()
             run(data)
             end_time = perf_counter()
-            print(f"{str(run)[10:].split()[0][:-4]} time: {end_time - start_time:.6f} seconds")
+            #print(f"{str(run)[10:].split()[0][:-4]} time: {end_time - start_time:.6f} seconds")
 
 
 class DataContainer:  # class used for Solver testing
