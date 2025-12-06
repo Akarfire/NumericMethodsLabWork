@@ -69,7 +69,10 @@ function createWindow()
         debugMessage(data.toString());
 
         const message = data.toString();
-        win.webContents.send("fromPython", message);
+
+        let lines = message.split("\n");
+        for (let i = 0; i < lines.length; i++)
+            if (lines[i] !== "") win.webContents.send("fromPython", lines[i]);
     });
 
     backend.stderr.on("data", data => {

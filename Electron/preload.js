@@ -1,6 +1,14 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
+let pythonListeners = [];
+
+ipcRenderer.on("fromPython", (_, msg) => {
+    for (const fn of pythonListeners) fn(msg);
+});
+
 contextBridge.exposeInMainWorld("py", {
     send: (data) => ipcRenderer.send("toPython", data),
-    receive: (fn) => ipcRenderer.on("fromPython", (_, msg) => fn(JSON.parse(msg)))
+    receive: (fn) => {
+        pythonListeners.push(fn);   // register but DO NOT add IPC listener repeatedly
+    }
 });
