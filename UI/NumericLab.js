@@ -68,6 +68,8 @@ function onFileLoaded()
     setupAdditionalOptions();
     setupNonOrganicsOptions();
     setupRipeningOptions();
+
+    setupButtonsPanel();
 }
 
 
@@ -102,8 +104,8 @@ function setupContentSplit()
 function contentSplitSetPercent(width_percent)
 {
     const divider = document.getElementById('content-divider');
-    const options_container = document.getElementById('options-container');
-    const content_containertPanel = document.getElementById('results-container');
+    const left_panel = document.getElementById('left-panel');
+    const results_container = document.getElementById('results-container');
 
     const containerWidth = divider.parentElement.getBoundingClientRect().width;
 
@@ -112,8 +114,8 @@ function contentSplitSetPercent(width_percent)
 
     if ((1 - width_percent) * containerWidth < minResultsWidth) width_percent = (1 - (minResultsWidth / containerWidth));
 
-    options_container.style.flex = `0 0 ${width_percent * 100}%`;
-    content_containertPanel.style.flex = `1`;
+    left_panel.style.flex = `0 0 ${width_percent * 100}%`;
+    results_container.style.flex = `1`;
 }
 
 
@@ -278,5 +280,14 @@ function setupRipeningOptions()
     const ripening_max_input = document.getElementById("ripening_max_input");
     ripening_max_input.addEventListener("change", (event) => {
         inputData.ripening_max = event.currentTarget.value;
+    });
+}
+
+
+function setupButtonsPanel()
+{
+    const runButton = document.getElementById("run-button");
+    runButton.addEventListener("click", () => {
+        window.py.send({ "input_data" : inputData });
     });
 }
