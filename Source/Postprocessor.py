@@ -11,7 +11,8 @@ class Postprocessor:
     def run_postprocessing(core) -> Results:
         
         data : Data = core.data      
-        results : Results = Results
+        results : Results = Results()
+        results.statistics = data.statistics
         
         return results
         
