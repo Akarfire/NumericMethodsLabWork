@@ -64,7 +64,14 @@ def test():
     BkJAlgorithm.run(data)
 
     print(data.statistics.sugarity_data_per_algorithm)
+    prev = 0
+    print("Choosing order: ",end="")
+    for i in data.statistics.sugarity_data_per_algorithm[AlgorithmNames.BkJ]:
+        print(i - prev, end=" ")
+        prev = i
+    print()
     print(data.matrix)
 
 
-test()
+if __name__ == "__main__":
+    test()
