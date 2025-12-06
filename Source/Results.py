@@ -1,7 +1,7 @@
 from Data import Data, Statistics
 from AlgorithmNames import AlgorithmNames
 
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, field
 
 @dataclass
 class Results:
@@ -11,8 +11,4 @@ class Results:
     
     best_strategy : AlgorithmNames = AlgorithmNames.GREEDY
     worst_strategy : AlgorithmNames = AlgorithmNames.GREEDY
-    
-    # Converts results structure into a dict for sending
-    def dict(self) -> dict:
-        return {k: str(v) for k, v in asdict(self).items()}
 
