@@ -4,65 +4,66 @@ document.addEventListener("DOMContentLoaded", onFileLoaded);
 
 let isResizingContent = false;
 
-const minOptionsWidth = 360;
+const minOptionsWidth = 460;
 const minResultsWidth = 100;
 
 let inputData = {
 
     //General  
-    n : 15,
-    m : 3000,
+    "n" : 15,
+    "m" : 3000,
     
-    a_min : 0,
-    a_max : 1,
+    "a_min" : 0,
+    "a_max" : 1,
 
-    b_min : 0,
-    b_max : 1,
+    "b_min" : 0,
+    "b_max" : 1,
     
-    degradation_mode : "Uniform",
-    concentrated_range_fraction : 0.25,
+    "degradation_mode" : "Uniform",
+    "concentrated_range_fraction" : 0.25,
     
-    experiment_count : 100,
+    "experiment_count" : 100,
     
-    use_individual_ranges : false,
-    individual_a_ranges : Array,
-    individual_b_ranges : Array,
+    "use_individual_ranges" : false,
+    "individual_a_ranges" : new Array(),
+    "individual_b_ranges" : new Array(),
     
     // Additional Algorithm Data
-    greedy_thrifty_stage : 5,
-    thrifty_greedy_stage : 5,
+    "greedy_thrifty_stage" : 5,
+    "thrifty_greedy_stage" : 5,
 
-    bkj_stage : 5,
-    bkj_rank : 2,
+    "bkj_stage" : 5,
+    "bkj_rank" : 2,
     
     // Non-organics
-    use_non_organics : false,
+    "use_non_organics" : false,
     
-    k_min : 5,
-    k_max : 7,
+    "k_min" : 5,
+    "k_max" : 7,
     
-    na_min : 0.21,
-    na_max : 0.82,
+    "na_min" : 0.21,
+    "na_max" : 0.82,
     
-    n_min : 1.5,
-    n_max : 2.8,
+    "n_min" : 1.5,
+    "n_max" : 2.8,
     
-    reduce_min : 0,
-    reduce_max : 1,
+    "reduce_min" : 0,
+    "reduce_max" : 1,
     
     // Ripening
-    use_ripening : false,
+    "use_ripening" : false,
     
-    ripening_stages : 5,
+    "ripening_stages" : 5,
     
-    ripening_min : 1,
-    ripening_max : 1.15
+    "ripening_min" : 1,
+    "ripening_max" : 1.15
 }
 
 function onFileLoaded()
 {
     setupContentSplit();
 
+    // Setting up option cards
     setupGeneralOptions();
     setupAdditionalOptions();
     setupNonOrganicsOptions();
@@ -75,8 +76,6 @@ function onFileLoaded()
 function setupContentSplit()
 {
     const divider = document.getElementById('content-divider');
-    const options_container = document.getElementById('options-container');
-    const content_containertPanel = document.getElementById('results-container');
 
     divider.addEventListener('mousedown', () => {
         isResizingContent = true;
@@ -118,9 +117,55 @@ function contentSplitSetPercent(width_percent)
 }
 
 
+// Option cards
+
 function setupGeneralOptions()
 {
     const generalCard = document.getElementById("general-card");
+
+    const experiment_count_input = document.getElementById("experiment_count_input");
+    experiment_count_input.addEventListener("change", (event) => {
+        inputData.experiment_count = event.currentTarget.value;
+    });
+    const n_input = document.getElementById("n_input");
+    n_input.addEventListener("change", (event) => {
+        inputData.n = event.currentTarget.value;
+    });
+    const m_input = document.getElementById("m_input");
+    m_input.addEventListener("change", (event) => {
+        inputData.m = event.currentTarget.value;
+    });
+
+    const a_min_input = document.getElementById("a_min_input");
+    a_min_input.addEventListener("change", (event) => {
+        inputData.a_min = event.currentTarget.value;
+    });
+    const a_max_input = document.getElementById("a_max_input");
+    a_max_input.addEventListener("change", (event) => {
+        inputData.a_max = event.currentTarget.value;
+    });
+    const b_min_input = document.getElementById("b_min_input");
+    b_min_input.addEventListener("change", (event) => {
+        inputData.b_min = event.currentTarget.value;
+    });
+    const b_max_input = document.getElementById("b_max_input");
+    b_max_input.addEventListener("change", (event) => {
+        inputData.b_max = event.currentTarget.value;
+    });
+
+    const degradation_mode_input = document.getElementById("degradation_mode_input");
+    degradation_mode_input.addEventListener("change", (event) => {
+        inputData.degradation_mode = event.currentTarget.value;
+    });
+    const concentrated_range_fraction_input = document.getElementById("concentrated_range_fraction_input");
+    concentrated_range_fraction_input.addEventListener("change", (event) => {
+        inputData.concentrated_range_fraction = event.currentTarget.value;
+    });
+
+    const use_individual_ranges_input = document.getElementById("use_individual_ranges_input");
+    use_individual_ranges_input.addEventListener("change", (event) => {
+        inputData.use_individual_ranges = event.currentTarget.value;
+    });
 }
 
 function setupAdditionalOptions()
@@ -129,12 +174,32 @@ function setupAdditionalOptions()
     const showCheckBox = document.getElementById("show-additional-options-checkbox");
     
     showCheckBox.addEventListener('change', (event) => {
-
-        if (event.currentTarget.checked) additionalCard.style.height = "450px";
-        else additionalCard.style.height = "200px";
+        //if (event.currentTarget.checked) additionalCard.style.height = "450px";
+        //else additionalCard.style.height = "200px";
     });
 
-    additionalCard.style.height = "200px";
+    //additionalCard.style.height = "200px";
+
+    const greedy_thrifty_stage_input = document.getElementById("greedy_thrifty_stage_input");
+    greedy_thrifty_stage_input.addEventListener("change", (event) => {
+        inputData.greedy_thrifty_stage = event.currentTarget.value;
+    });
+    const thrifty_greedy_stage_input = document.getElementById("thrifty_greedy_stage_input");
+    thrifty_greedy_stage_input.addEventListener("change", (event) => {
+        inputData.thrifty_greedy_stage = event.currentTarget.value;
+    });
+    const bkj_stage_input = document.getElementById("bkj_stage_input");
+    bkj_stage_input.addEventListener("change", (event) => {
+        inputData.bkj_stage = event.currentTarget.value;
+    });
+    const bkj_rank_input = document.getElementById("bkj_rank_input");
+    bkj_rank_input.addEventListener("change", (event) => {
+        inputData.bkj_rank = event.currentTarget.value;
+    });
+    const ctg_stage_input = document.getElementById("ctg_stage_input");
+    ctg_stage_input.addEventListener("change", (event) => {
+        inputData.ctg_stage_input = event.currentTarget.value;
+    });
 }
 
 function setupNonOrganicsOptions()
@@ -143,12 +208,48 @@ function setupNonOrganicsOptions()
     const useCheckBox = document.getElementById("use-non-organics-checkbox");
     
     useCheckBox.addEventListener('change', (event) => {
-
-        if (event.currentTarget.checked) nonOrganicCard.style.height = "450px";
-        else nonOrganicCard.style.height = "200px";
+        inputData.use_non_organics = event.currentTarget.checked;
+        //if (event.currentTarget.checked) nonOrganicCard.style.height = "450px";
+        //else nonOrganicCard.style.height = "200px";
     });
 
-    nonOrganicCard.style.height = "200px";
+    //nonOrganicCard.style.height = "200px";
+
+    const k_min_input = document.getElementById("k_min_input");
+    k_min_input.addEventListener("change", (event) => {
+        inputData.k_min = event.currentTarget.value;
+    });
+    const k_max_input = document.getElementById("k_max_input");
+    k_max_input.addEventListener("change", (event) => {
+        inputData.k_max = event.currentTarget.value;
+    });
+
+    const na_min_input = document.getElementById("na_min_input");
+    na_min_input.addEventListener("change", (event) => {
+        inputData.na_min = event.currentTarget.value;
+    });
+    const na_max_input = document.getElementById("na_max_input");
+    na_max_input.addEventListener("change", (event) => {
+        inputData.na_max = event.currentTarget.value;
+    });
+
+    const n_min_input = document.getElementById("n_min_input");
+    n_min_input.addEventListener("change", (event) => {
+        inputData.n_min = event.currentTarget.value;
+    });
+    const n_max_input = document.getElementById("n_max_input");
+    n_max_input.addEventListener("change", (event) => {
+        inputData.n_max = event.currentTarget.value;
+    });
+
+    const reduce_min_input = document.getElementById("reduce_min_input");
+    reduce_min_input.addEventListener("change", (event) => {
+        inputData.reduce_min = event.currentTarget.value;
+    });
+    const reduce_max_input = document.getElementById("reduce_max_input");
+    reduce_max_input.addEventListener("change", (event) => {
+        inputData.reduce_max = event.currentTarget.value;
+    });
 }
 
 function setupRipeningOptions()
@@ -157,10 +258,25 @@ function setupRipeningOptions()
     const useCheckBox = document.getElementById("use-ripening-checkbox");
     
     useCheckBox.addEventListener('change', (event) => {
-
-        if (event.currentTarget.checked) ripeningCard.style.height = "450px";
-        else ripeningCard.style.height = "200px";
+        inputData.use_ripening = event.currentTarget.checked;
+        //if (event.currentTarget.checked) ripeningCard.style.height = "450px";
+        //else ripeningCard.style.height = "200px";
     });
 
-    ripeningCard.style.height = "200px";
+    //ripeningCard.style.height = "200px";
+
+    const ripening_stages_input = document.getElementById("ripening_stages_input");
+    ripening_stages_input.addEventListener("change", (event) => {
+        inputData.ripening_stages = event.currentTarget.value;
+    });
+
+    const ripening_min_input = document.getElementById("ripening_min_input");
+    ripening_min_input.addEventListener("change", (event) => {
+        inputData.ripening_min = event.currentTarget.value;
+    });
+
+    const ripening_max_input = document.getElementById("ripening_max_input");
+    ripening_max_input.addEventListener("change", (event) => {
+        inputData.ripening_max = event.currentTarget.value;
+    });
 }

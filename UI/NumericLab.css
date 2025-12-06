@@ -45,11 +45,29 @@
 {
     background: #484b74;
 
-    height: 450px;
-    width: 350px;
+    height: fit-content;
+    min-height: 100px;
+    
+    width: 450px;
     /* width: 100%;
     flex: 0, 1, 350px; */
 
+    border-radius: 10px;
+/* 
+    display: flex;
+    flex-direction: column;
+    align-items: center; */
+}
+
+.options-section
+{
+    height: fit-content;
+    width: auto;
+
+    padding: 2px;
+    margin: 20px;
+
+    background: #626795;
     border-radius: 10px;
 }
 
@@ -67,10 +85,13 @@
 {
     background: #30324d;
 
-    margin: 20px;
-
     display: flex;
     border-radius: 10px;
+    align-items: center;
+
+    margin: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .option-text
@@ -81,4 +102,12 @@
     font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: left;
+}
+
+.number-input
+{
+    height: 40px;
+    width: 60px;
+
+    border-radius: 10px;
 }
