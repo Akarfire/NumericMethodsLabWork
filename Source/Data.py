@@ -4,7 +4,7 @@ from AlgorithmNames import AlgorithmNames
 @dataclass
 class Statistics:
     
-    sugarity_data_per_algorithm : dict[AlgorithmNames, list[float]] = field(default_factory=dict)
+    sugarity_data_per_algorithm : dict[AlgorithmNames : list[float]] = field(default_factory=dict)
     
 
 # Contains all runtime data that needs to be transfered between stages
