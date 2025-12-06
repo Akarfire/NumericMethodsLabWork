@@ -5,6 +5,7 @@ from Input import Input
 from Preprocessor import Preprocessor
 from Solver import Solver
 from Postprocessor import Postprocessor
+from UserInterface import UserInterface
 
 class Core:
     
@@ -20,6 +21,8 @@ class Core:
         
         # Run time data
         self.data : Data = Data()
+        
+        self.userInterface = UserInterface(self)
     
     
     def __run_experiment(self, input_data : Input):
@@ -33,14 +36,13 @@ class Core:
         
     # UI Interface
     
+    def init_ui(self):
+        self.userInterface.run_ui()
+    
     # Called from the UI side
-    def call_run(self, input_data_dict : dict):
-        
-        input_data : Input = Input() # TO DO : Convert input_data_dict to Input
+    def call_run(self, input_data : Input):
         self.__run_experiment(input_data)
         
     # Sends results back to the UI side
     def __respond_send_results(self, results: Results):
-        
-        # results.dict()
-        pass
+        self.userInterface.send_results(results)
