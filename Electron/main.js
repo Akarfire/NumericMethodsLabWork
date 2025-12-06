@@ -1,10 +1,10 @@
-const { app, BrowserWindow, dialog } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 
 const { spawn } = require('child_process');
 const path = require('path');
 
 
-let ui_backend;
+let backend;
 
 function debugMessage(message)
 {
@@ -17,7 +17,7 @@ function debugMessage(message)
     // });
 }
 
-function runEmbeddedPython(script, args = []) 
+function runEmbeddedPython(script, args = [], win) 
 {
     let pythonExe, scriptPath, pythonDir;
 
@@ -37,19 +37,7 @@ function runEmbeddedPython(script, args = [])
         pythonDir = path.join(__dirname, "..", "Source");
     }
 
-    const py = spawn(pythonExe, [scriptPath, ...args], { shell: true, cwd: pythonDir });
-
-    py.stdout.on("data", data => {
-        debugMessage(data.toString());
-    });
-
-    py.stderr.on("data", data => {
-        debugMessage(data.toString());
-    });
-
-    py.on("exit", code => {
-        debugMessage(code.toString());
-    });
+    const py = spawn(pythonExe, ["-u", scriptPath, ...args], { cwd: pythonDir });
 
     return py;
 }
@@ -60,8 +48,9 @@ function createWindow()
         width: 1280,
         height: 720,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: __dirname + "/preload.js"
         }
     });
 
@@ -72,8 +61,28 @@ function createWindow()
 
     win.loadFile(ui_file);
 
-    // Running Core
-    ui_backend = runEmbeddedPython("Main.py");
+    // Running backedn
+    backend = runEmbeddedPython("Main.py", [], win);
+
+
+    backend.stdout.on("data", data => {
+        debugMessage(data.toString());
+
+        const message = data.toString();
+        win.webContents.send("fromPython", message);
+    });
+
+    backend.stderr.on("data", data => {
+        debugMessage(data.toString());
+    });
+
+    backend.on("exit", code => {
+        debugMessage(" exited with code:" + code.toString());
+    });
+
+    ipcMain.on("toPython", (_, msg) => {
+        backend.stdin.write(JSON.stringify(msg) + "\n");
+    });
 }
 
 app.whenReady().then(() => {
