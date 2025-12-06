@@ -164,7 +164,7 @@ function setupGeneralOptions()
 
     const use_individual_ranges_input = document.getElementById("use_individual_ranges_input");
     use_individual_ranges_input.addEventListener("change", (event) => {
-        inputData.use_individual_ranges = event.currentTarget.value;
+        inputData.use_individual_ranges = event.currentTarget.checked;
     });
 }
 
