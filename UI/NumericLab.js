@@ -3,9 +3,17 @@
 document.addEventListener("DOMContentLoaded", onFileLoaded);
 
 let isResizingContent = false;
+let isResizingResults = false;
+let isResizingInterpretation = false;
 
 const minOptionsWidth = 460;
 const minResultsWidth = 100;
+
+const minPlotHeight = 100;
+const minInterpretationHeight = 100;
+
+const minTextResultsWidth = 100;
+const minRecommendationWidth = 100;
 
 let inputData = {
 
@@ -62,6 +70,7 @@ let inputData = {
 function onFileLoaded()
 {
     setupContentSplit();
+    setupResultsSplit();
 
     // Setting up option cards
     setupGeneralOptions();
@@ -121,6 +130,50 @@ function contentSplitSetPercent(width_percent)
 
     left_panel.style.flex = `0 0 ${width_percent * 100}%`;
     results_container.style.flex = `1`;
+}
+
+function setupResultsSplit()
+{
+    const divider = document.getElementById('results-divider');
+
+    divider.addEventListener('mousedown', () => {
+        isResizingResults = true;
+        document.body.style.cursor = 'row-resize';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizingResults) return;
+
+        const containerHeight = divider.parentElement.getBoundingClientRect().height;
+        const plotHeight = e.clientY / containerHeight;
+        console.log(containerHeight);
+
+        resultsSplitSetPercent(plotHeight);
+    });
+
+    document.addEventListener('mouseup', () => {
+        isResizingResults = false;
+        document.body.style.cursor = 'default';
+    });
+
+    resultsSplitSetPercent(0.3);
+}
+
+function resultsSplitSetPercent(height_percent)
+{
+    const divider = document.getElementById('results-divider');
+    const plot_container = document.getElementById('plot-container');
+    const interpretation_container = document.getElementById('interpretation-container');
+
+    const containerHeight = divider.parentElement.getBoundingClientRect().height;
+
+    // Clamping height
+    if (height_percent * containerHeight < minPlotHeight) height_percent = (minPlotHeight / containerHeight);
+
+    if ((1 - height_percent) * containerHeight < minInterpretationHeight) height_percent = (1 - (minInterpretationHeight / containerHeight));
+
+    plot_container.style.flex = `0 0 ${height_percent * 100}%`;
+    interpretation_container.style.flex = `1`;
 }
 
 
