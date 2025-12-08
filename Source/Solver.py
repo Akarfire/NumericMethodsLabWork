@@ -11,6 +11,7 @@ from Algorithms import ThriftyGreedyAlgorithm
 from Algorithms import BkJ
 from Algorithms import CTGAlgorithm
 from Algorithms import GreedyThriftyAlgorithm
+from Algorithms import MinimalAlgorithm
 from Algorithms import ThriftyAlgorithm
 
 
@@ -31,6 +32,7 @@ class Solver:
             HungarianAlgorithm.HungarianAlgorithm.run,
             ThriftyAlgorithm.ThriftyAlgorithm.run,
             ThriftyGreedyAlgorithm.ThriftyGreedyAlgorithm.run,
+            MinimalAlgorithm.MinimalAlgorithm.run
         ]
 
         # Running algorithms
@@ -78,6 +80,53 @@ def inputRangesTest():
     print("input ranges test didn't crash")
 
 
+def testWithEtalons():
+    test_small_matrix = [[76, 34, 89, 12, 95],
+                         [23, 67, 45, 81,  3],
+                         [98, 14, 56, 72, 29],
+                         [61,  8, 91, 44, 17],
+                         [50, 25, 39, 66, 83]]
+
+    etalons = dict()  # заполняется мной вручную
+    etalons[AlgorithmNames.BkJ] = [50, 14, 91, 81, 95]
+    etalons[AlgorithmNames.CTG] = [61, 25, 56, 81, 95]
+    etalons[AlgorithmNames.GREEDY] = [98, 67, 91, 66, 95]
+    etalons[AlgorithmNames.GREEDY_THRIFTY] = [98, 67, 91, 12, 83]
+    etalons[AlgorithmNames.HUNGARIAN] = [98, 67, 91, 66, 95]
+    etalons[AlgorithmNames.THRIFTY] = [23, 8, 39, 12, 29]
+    etalons[AlgorithmNames.THRIFTY_GREEDY] = [23, 8, 89, 72, 83]
+    etalons[AlgorithmNames.MINIMAL] = [23, 14, 39, 12, 17]
+
+    data = Data(
+        n=len(test_small_matrix),
+        bkj_rank=2,
+        bkj_stage=3,
+        ctg_stage=2,
+        greedy_thrifty_stage=4,
+        thrifty_greedy_stage=3,
+        matrix=test_small_matrix
+    )
+    dataContainer = DataContainer(data)
+    Solver.run_solver(dataContainer)
+
+    for i in dataContainer.data.statistics.sugarity_data_per_algorithm:
+        try:
+            actual = list()
+            for j in range(len(dataContainer.data.statistics.sugarity_data_per_algorithm[i])):
+                if j == 0:
+                    actual.append(dataContainer.data.statistics.sugarity_data_per_algorithm[i][j])
+                else:
+                    cur = dataContainer.data.statistics.sugarity_data_per_algorithm[i][j]
+                    prev = dataContainer.data.statistics.sugarity_data_per_algorithm[i][j - 1]
+                    actual.append(cur - prev)
+            if actual != etalons[i]:
+                print("Algorithm doesn't work properly. Breaks on", i)
+            else:
+                print(i, "works fine")
+        except:
+            print("It crashes on", i)
+
+
 def test():
     small_matrix = [[1, 1, 1456456, 100, 1],
                     [2, 2, 2, 200, 2],
@@ -102,7 +151,7 @@ def test():
         matrix=big_matrix
     )
     dataContainer = DataContainer(data)
-    Solver.run_solver(dataContainer, show_time=True)
+    Solver.run_solver(dataContainer)
 
     print()
 
@@ -122,5 +171,6 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
-    inputRangesTest()
+    testWithEtalons()
+    # test()
+    # inputRangesTest()
