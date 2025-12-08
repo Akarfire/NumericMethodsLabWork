@@ -22,8 +22,8 @@ class Solver:
 
     # Runs algorithms
     @staticmethod
-    def run_solver(core, show_time=False):
-        data: Data = core.data
+    def run_solver(in_data: Data) -> Data:
+        data: Data = in_data
         algorithms_runs = [
             BkJ.BkJAlgorithm.run,
             CTGAlgorithm.CTGAlgorithm.run,
@@ -32,7 +32,7 @@ class Solver:
             HungarianAlgorithm.HungarianAlgorithm.run,
             ThriftyAlgorithm.ThriftyAlgorithm.run,
             ThriftyGreedyAlgorithm.ThriftyGreedyAlgorithm.run,
-            MinimalAlgorithm.MinimalAlgorithm.run
+            MinimalAlgorithm.MinimalAlgorithm.run,
         ]
 
         # Running algorithms
@@ -40,15 +40,18 @@ class Solver:
             start_time = perf_counter()
             run(data)
             end_time = perf_counter()
-            if show_time:
-                print(f"{str(run)[10:].split()[0][:-4]} time: {end_time - start_time:.6f} seconds")
+            # print(f"{str(run)[10:].split()[0][:-4]} time: {end_time - start_time:.6f} seconds")
+
+        return data
 
 
 class DataContainer:  # class used for Solver testing
     data: Data
+    n : int
 
-    def __init__(self, input_data):
+    def __init__(self, input_data, n):
         self.data = input_data
+        self.n = n
 
 
 # input ranges test: (если упадет значит указанные range в Input.py неверные)
@@ -75,8 +78,7 @@ def inputRangesTest():
                             thrifty_greedy_stage=_thrifty_greedy_stage,
                             matrix=big_matrix
                         )
-                        dataContainer = DataContainer(data)
-                        Solver.run_solver(dataContainer)
+                        Solver.run_solver(data)
     print("input ranges test didn't crash")
 
 
@@ -106,18 +108,17 @@ def testWithEtalons():
         thrifty_greedy_stage=3,
         matrix=test_small_matrix
     )
-    dataContainer = DataContainer(data)
-    Solver.run_solver(dataContainer)
+    Solver.run_solver(data)
 
-    for i in dataContainer.data.statistics.sugarity_data_per_algorithm:
+    for i in data.statistics.sugarity_data_per_algorithm:
         try:
             actual = list()
-            for j in range(len(dataContainer.data.statistics.sugarity_data_per_algorithm[i])):
+            for j in range(len(data.statistics.sugarity_data_per_algorithm[i])):
                 if j == 0:
-                    actual.append(dataContainer.data.statistics.sugarity_data_per_algorithm[i][j])
+                    actual.append(data.statistics.sugarity_data_per_algorithm[i][j])
                 else:
-                    cur = dataContainer.data.statistics.sugarity_data_per_algorithm[i][j]
-                    prev = dataContainer.data.statistics.sugarity_data_per_algorithm[i][j - 1]
+                    cur = data.statistics.sugarity_data_per_algorithm[i][j]
+                    prev = data.statistics.sugarity_data_per_algorithm[i][j - 1]
                     actual.append(cur - prev)
             if actual != etalons[i]:
                 print("Algorithm doesn't work properly. Breaks on", i)
@@ -150,8 +151,7 @@ def test():
         thrifty_greedy_stage=5,
         matrix=big_matrix
     )
-    dataContainer = DataContainer(data)
-    Solver.run_solver(dataContainer)
+    Solver.run_solver(data)
 
     print()
 
@@ -163,14 +163,14 @@ def test():
     print()
 
     print("Algorithm results: ")
-    for i in dataContainer.data.statistics.sugarity_data_per_algorithm:
-        eff = 100.0 * dataContainer.data.statistics.sugarity_data_per_algorithm[i][-1] / \
-              dataContainer.data.statistics.sugarity_data_per_algorithm[AlgorithmNames.HUNGARIAN][-1]
+    for i in data.statistics.sugarity_data_per_algorithm:
+        eff = 100.0 * data.statistics.sugarity_data_per_algorithm[i][-1] / \
+              data.statistics.sugarity_data_per_algorithm[AlgorithmNames.HUNGARIAN][-1]
 
-        print(f"{i}: {dataContainer.data.statistics.sugarity_data_per_algorithm[i][-1]}. Efficiency: {eff:0.2f}%")
+        print(f"{i}: {data.statistics.sugarity_data_per_algorithm[i][-1]}. Efficiency: {eff:0.2f}%")
 
 
 if __name__ == "__main__":
     testWithEtalons()
-    # test()
+    test()
     # inputRangesTest()
