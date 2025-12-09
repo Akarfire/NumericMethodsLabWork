@@ -2,9 +2,11 @@ from Algorithm import Algorithm
 from AlgorithmNames import AlgorithmNames
 from Data import Data, Statistics
 from copy import copy
+from numpy import array
+from scipy.optimize import linear_sum_assignment
 
 
-class ThriftyAlgorithm(Algorithm):
+class MinimalAlgorithm(Algorithm):
 
     def __init__(self):
         super().__init__()
@@ -17,25 +19,27 @@ class ThriftyAlgorithm(Algorithm):
 
         stages = input_data.n
         sugarity_per_stage = list()
-        batches_left = list(range(0, stages))
+
+        # Transpose the matrix for linear_sum_assignment
+        transposed_matrix = list()
+        for i in range(stages):
+            transposed_matrix.append(list())
+            for j in range(stages):
+                transposed_matrix[i].append(input_data.matrix[j][i])
 
         # Algorithm implementation
+        row_ind, col_ind = linear_sum_assignment(transposed_matrix)
+
+        # Filling statistics
         for cur_stage in range(stages):
-            min_c = input_data.matrix[batches_left[0]][cur_stage]
-            min_ind = batches_left[0]
-            for ind in batches_left:
-                cur_c = input_data.matrix[ind][cur_stage]
-                if cur_c < min_c:
-                    min_ind = ind
-                    min_c = cur_c
+            max_c = transposed_matrix[row_ind[cur_stage]][col_ind[cur_stage]]
             if len(sugarity_per_stage) == 0:
-                sugarity_per_stage.append(min_c)
+                sugarity_per_stage.append(max_c)
             else:
-                sugarity_per_stage.append(sugarity_per_stage[-1] + min_c)
-            batches_left.remove(min_ind)
+                sugarity_per_stage.append(sugarity_per_stage[-1] + max_c)
 
         # Add new statistics to input
-        input_data.statistics.sugarity_data_per_algorithm[AlgorithmNames.THRIFTY] = sugarity_per_stage
+        input_data.statistics.sugarity_data_per_algorithm[AlgorithmNames.MINIMAL] = sugarity_per_stage
 
 
 def test():
@@ -45,12 +49,12 @@ def test():
               [4, 4, 4,       4,   4],
               [5, 5, 5234234, 5,   5]]
     data = Data(n=5, matrix=matrix)
-    ThriftyAlgorithm.run(data)
+    MinimalAlgorithm.run(data)
 
     print(data.statistics.sugarity_data_per_algorithm)
     prev = 0
     print("Choosing order: ", end="")
-    for i in data.statistics.sugarity_data_per_algorithm[AlgorithmNames.THRIFTY]:
+    for i in data.statistics.sugarity_data_per_algorithm[AlgorithmNames.MINIMAL]:
         print(i - prev, end=" ")
         prev = i
     print()
