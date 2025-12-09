@@ -7,10 +7,14 @@ let isResizingResults = false;
 let isResizingInterpretation = false;
 
 const minOptionsWidth = 460;
-const minResultsWidth = 100;
+const minResultsWidth = 500;
 
 const minPlotHeight = 100;
 const minInterpretationHeight = 100;
+
+let contentSplitWidth = 0;
+let resultsSplitHeight = 0;
+
 
 let algorithmTextResults = new Array();
 
@@ -89,8 +93,22 @@ function onFileLoaded()
             showResults(data.results);
         }
     });
+
+    window.addEventListener('resize', handleWindowResize);
 }
 
+function handleWindowResize()
+{
+    const content_divider = document.getElementById('content-divider');
+    const content_containerWidth = content_divider.parentElement.getBoundingClientRect().width;
+
+    contentSplitSetPercent(contentSplitWidth / content_containerWidth);
+
+    const results_divider = document.getElementById('results-divider');
+    const results_containerHeight = results_divider.parentElement.getBoundingClientRect().height;
+
+    resultsSplitSetPercent(resultsSplitHeight / results_containerHeight);
+}
 
 // Content Split
 
@@ -128,11 +146,13 @@ function setupContentSplit()
 
 function contentSplitSetPercent(width_percent)
 {
-    const divider = document.getElementById('content-divider');
     const left_panel = document.getElementById('left-panel');
     const results_container = document.getElementById('results-container');
 
+    const divider = document.getElementById('content-divider');
     const containerWidth = divider.parentElement.getBoundingClientRect().width;
+
+    contentSplitWidth = width_percent * containerWidth;
 
     // Clamping options width
     if (width_percent * containerWidth < minOptionsWidth) width_percent = (minOptionsWidth / containerWidth);
@@ -178,11 +198,13 @@ function setupResultsSplit()
 
 function resultsSplitSetPercent(height_percent)
 {
-    const divider = document.getElementById('results-divider');
     const plot_container = document.getElementById('plot-container');
     const interpretation_container = document.getElementById('interpretation-container');
 
+    const divider = document.getElementById('results-divider');
     const containerHeight = divider.parentElement.getBoundingClientRect().height;
+
+    resultsSplitHeight = height_percent * containerHeight;
 
     // Clamping height
     if (height_percent * containerHeight < minPlotHeight) height_percent = (minPlotHeight / containerHeight);
@@ -248,11 +270,11 @@ function setupGeneralOptions()
         checkInputCorrectness();
     });
 
-    const use_individual_ranges_input = document.getElementById("use_individual_ranges_input");
-    use_individual_ranges_input.addEventListener("change", (event) => {
-        inputData.use_individual_ranges = event.currentTarget.checked;
-        checkInputCorrectness();
-    });
+    // const use_individual_ranges_input = document.getElementById("use_individual_ranges_input");
+    // use_individual_ranges_input.addEventListener("change", (event) => {
+    //     inputData.use_individual_ranges = event.currentTarget.checked;
+    //     checkInputCorrectness();
+    // });
 }
 
 function setupAdditionalOptions()
@@ -518,7 +540,7 @@ function showResults(results)
 
         const result_number = value * inputData.m;
 
-        text_result_name.textContent = algorithm_name;
+        text_result_name.textContent = String(i) + ". " + algorithm_name;
         text_result_value.textContent = result_number.toLocaleString("ru", {
                 maximumFractionDigits: 2,
                 minimumFractionDigits: 2,
