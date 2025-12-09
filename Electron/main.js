@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, WebContentsView, dialog, ipcMain } = require('electron');
 
 const { spawn } = require('child_process');
 const path = require('path');
@@ -6,6 +6,11 @@ const fs = require("fs");
 
 
 let backend;
+
+let mainWindow;
+let tabs = [];
+let activeTab = -1;
+
 
 function debugMessage(message)
 {
@@ -45,7 +50,7 @@ function runEmbeddedPython(script, args = [], win)
 
 function createWindow() 
 {
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
         webPreferences: {
@@ -57,10 +62,17 @@ function createWindow()
         }
     });
 
+    // Handle resize to reposition active view
+    mainWindow.on('resize', () => {
+        if (activeTab >= 0) layoutActiveView();
+    });
+
+    const win = mainWindow;
+
     // Loading UI
     let ui_file;
-    if (app.isPackaged) ui_file = path.join(process.resourcesPath, "ui", "NumericLab.html");
-    else ui_file = path.join(__dirname, "..", "UI", "NumericLab.html");
+    if (app.isPackaged) ui_file = path.join(process.resourcesPath, "ui", "Tabs.html");
+    else ui_file = path.join(__dirname, "..", "UI", "Tabs.html");
 
     win.loadFile(ui_file);
 
@@ -68,13 +80,16 @@ function createWindow()
     backend = runEmbeddedPython("Main.py", [], win);
 
     backend.stdout.on("data", data => {
+
         debugMessage(data.toString());
+        if (activeTab >= 0 && activeTab < tabs.length)
+        {
+            const message = data.toString();
 
-        const message = data.toString();
-
-        let lines = message.split("\n");
-        for (let i = 0; i < lines.length; i++)
-            if (lines[i] !== "") win.webContents.send("fromPython", lines[i]);
+            let lines = message.split("\n");
+            for (let i = 0; i < lines.length; i++)
+                if (lines[i] !== "") tabs[activeTab].webContents.send("fromPython", lines[i]);
+        }
     });
 
     backend.stderr.on("data", data => {
@@ -114,3 +129,107 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => { app.quit(); });
+
+
+function createTab() 
+{
+    const view = new WebContentsView({
+        webPreferences: {
+            zoomFactor: 0.9,
+            nodeIntegration: false,
+            contextIsolation: true,
+            webSecurity: false,
+            preload: __dirname + "/preload.js"
+        }
+    });
+
+    view.setBackgroundColor('rgba(0, 0, 0, 1)');
+
+    let ui_file;
+    if (app.isPackaged) ui_file = path.join(process.resourcesPath, 'ui', 'NumericLab.html');
+    else ui_file = path.join(__dirname, '..', 'UI', 'NumericLab.html');
+
+    view.webContents.loadFile(ui_file);
+
+    tabs.push(view);
+    switchTab(tabs.length - 1);
+    sendTabListToRenderer();
+}
+
+function switchTab(index) 
+{
+    if (index === activeTab) return;
+    if(index < 0 || index >= tabs.length) return;
+
+    const prev = tabs[activeTab];
+
+    if (prev) 
+    {
+        mainWindow.contentView.removeChildView(prev);
+    }
+
+    activeTab = index;
+    const view = tabs[activeTab];
+    mainWindow.contentView.addChildView(view);
+
+    layoutActiveView();
+    sendTabListToRenderer();
+}
+
+function closeTab(index) 
+{
+    if (tabs.length === 1) return;
+
+    const view = tabs[index];
+    if (!view) return;
+
+    if (index === activeTab) 
+    {
+        mainWindow.contentView.removeChildView(view);
+    }
+
+    view.webContents.destroy();
+    tabs.splice(index, 1);
+
+    if (index === activeTab) 
+    {
+        activeTab = Math.max(0, index - 1);
+        const newView = tabs[activeTab];
+        mainWindow.contentView.addChildView(newView);
+        layoutActiveView();
+    } 
+
+    else if (index < activeTab) 
+    {
+        activeTab--;
+    }
+
+    sendTabListToRenderer();
+}
+
+function layoutActiveView() 
+{
+    const tabBarHeight = 45;
+
+    const [w, h] = mainWindow.getSize();    // width, height array
+    const view = tabs[activeTab];
+    view.setBounds({
+        x: 0, 
+        y: tabBarHeight,
+        width: w,
+        height: h - tabBarHeight
+    });
+}
+
+function sendTabListToRenderer() 
+{
+    mainWindow.webContents.send('tabs:update', {
+        tabs: tabs.map((_, i) => ({ id: i })),
+        active: activeTab
+    });
+}
+
+// IPC handlers
+ipcMain.on('tabs:new', () => createTab());
+ipcMain.on('tabs:switch', (_, index) => switchTab(index));
+ipcMain.on('tabs:close', (_, index) => closeTab(index));
