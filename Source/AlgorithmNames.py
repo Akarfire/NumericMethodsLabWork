@@ -10,3 +10,4 @@ class AlgorithmNames(Enum):
     THRIFTY_GREEDY = 4
     BkJ = 5
     CTG = 6
+    MINIMAL = 7

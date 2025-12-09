@@ -23,14 +23,20 @@ class CTGAlgorithm(Algorithm):
         # Filling indices according to formula
         for i in range(v - 1):
             ind = stages - 2 * v + 1 + 2 * (i + 1)
+            # if ind < 0:
+            #    raise ValueError(f"Negative index: ind = {ind}, i = {i}, v = {v}, stages = {stages}")
             indices.append(ind - 1)
 
         for i in range(v - 1, 2 * v - 1):
             ind = stages - 2 * (i - (v - 1))
+            # if ind < 0:
+            #    raise ValueError(f"Negative index: ind = {ind}, i = {i}, v = {v}, stages = {stages}")
             indices.append(ind - 1)
 
         for i in range(2 * v - 1, stages):
             ind = stages - i
+            # if ind < 0:
+            #    raise ValueError(f"Negative index: ind = {ind}, i = {i}, v = {v}, stages = {stages}")
             indices.append(ind - 1)
 
         # Algorithm implementation
