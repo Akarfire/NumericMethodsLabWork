@@ -203,56 +203,55 @@ function setupGeneralOptions()
     const experiment_count_input = document.getElementById("experiment_count_input");
     experiment_count_input.addEventListener("change", (event) => {
         inputData.experiment_count = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const n_input = document.getElementById("n_input");
     n_input.addEventListener("change", (event) => {
         inputData.n = Number(event.currentTarget.value);
-        checkInputCorrectness
         checkInputCorrectness();
     });
     const m_input = document.getElementById("m_input");
     m_input.addEventListener("change", (event) => {
         inputData.m = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const a_min_input = document.getElementById("a_min_input");
     a_min_input.addEventListener("change", (event) => {
         inputData.a_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const a_max_input = document.getElementById("a_max_input");
     a_max_input.addEventListener("change", (event) => {
         inputData.a_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const b_min_input = document.getElementById("b_min_input");
     b_min_input.addEventListener("change", (event) => {
         inputData.b_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const b_max_input = document.getElementById("b_max_input");
     b_max_input.addEventListener("change", (event) => {
         inputData.b_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const degradation_mode_input = document.getElementById("degradation_mode_input");
     degradation_mode_input.addEventListener("change", (event) => {
         inputData.degradation_mode = event.currentTarget.value;
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const concentrated_range_fraction_input = document.getElementById("concentrated_range_fraction_input");
     concentrated_range_fraction_input.addEventListener("change", (event) => {
         inputData.concentrated_range_fraction = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const use_individual_ranges_input = document.getElementById("use_individual_ranges_input");
     use_individual_ranges_input.addEventListener("change", (event) => {
         inputData.use_individual_ranges = event.currentTarget.checked;
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 }
 
@@ -302,7 +301,7 @@ function setupNonOrganicsOptions()
     
     useCheckBox.addEventListener('change', (event) => {
         inputData.use_non_organics = event.currentTarget.checked;
-        checkInputCorrectness
+        checkInputCorrectness();
         //if (event.currentTarget.checked) nonOrganicCard.style.height = "450px";
         //else nonOrganicCard.style.height = "200px";
     });
@@ -312,45 +311,45 @@ function setupNonOrganicsOptions()
     const k_min_input = document.getElementById("k_min_input");
     k_min_input.addEventListener("change", (event) => {
         inputData.k_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const k_max_input = document.getElementById("k_max_input");
     k_max_input.addEventListener("change", (event) => {
         inputData.k_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const na_min_input = document.getElementById("na_min_input");
     na_min_input.addEventListener("change", (event) => {
         inputData.na_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const na_max_input = document.getElementById("na_max_input");
     na_max_input.addEventListener("change", (event) => {
         inputData.na_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const n_min_input = document.getElementById("n_min_input");
     n_min_input.addEventListener("change", (event) => {
         inputData.n_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const n_max_input = document.getElementById("n_max_input");
     n_max_input.addEventListener("change", (event) => {
         inputData.n_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const reduce_min_input = document.getElementById("reduce_min_input");
     reduce_min_input.addEventListener("change", (event) => {
         inputData.reduce_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
     const reduce_max_input = document.getElementById("reduce_max_input");
     reduce_max_input.addEventListener("change", (event) => {
         inputData.reduce_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 }
 
@@ -361,7 +360,7 @@ function setupRipeningOptions()
     
     useCheckBox.addEventListener('change', (event) => {
         inputData.use_ripening = event.currentTarget.checked;
-        checkInputCorrectness
+        checkInputCorrectness();
         //if (event.currentTarget.checked) ripeningCard.style.height = "450px";
         //else ripeningCard.style.height = "200px";
     });
@@ -371,19 +370,19 @@ function setupRipeningOptions()
     const ripening_stages_input = document.getElementById("ripening_stages_input");
     ripening_stages_input.addEventListener("change", (event) => {
         inputData.ripening_stages = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const ripening_min_input = document.getElementById("ripening_min_input");
     ripening_min_input.addEventListener("change", (event) => {
         inputData.ripening_min = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 
     const ripening_max_input = document.getElementById("ripening_max_input");
     ripening_max_input.addEventListener("change", (event) => {
         inputData.ripening_max = Number(event.currentTarget.value);
-        checkInputCorrectness
+        checkInputCorrectness();
     });
 }
 
