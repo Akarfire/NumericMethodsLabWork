@@ -49,6 +49,7 @@ function createWindow()
         width: 1280,
         height: 720,
         webPreferences: {
+            zoomFactor: 0.9,
             nodeIntegration: false,
             contextIsolation: true,
             webSecurity: false,
