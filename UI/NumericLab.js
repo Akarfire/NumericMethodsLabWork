@@ -15,6 +15,8 @@ const minInterpretationHeight = 100;
 let contentSplitWidth = 0;
 let resultsSplitHeight = 0;
 
+let isScaleHovered = false;
+let scaleMarkers = new Array();
 
 let algorithmTextResults = new Array();
 
@@ -512,6 +514,9 @@ function checkInputCorrectness()
         const ctg_stage_input = document.getElementById("ctg_stage_input");
         ctg_stage_input.classList.remove("wrong");
     }
+
+    const runButton = document.getElementById("run-button");
+    runButton.disabled = !isInputCorrect;
 }
 
 
@@ -618,7 +623,7 @@ function showScale(statistics_list)
         marker.style.left = `${value * 100}%`;
 
         marker.innerHTML = `
-            <div class="algorithm-name">${algorithm[0]}</div>
+            <div class="algorithm-name" style="top:${(i % 2) * 50}px">${algorithm[0]}</div>
             <div class="algorithm-value">(${(value * 100).toLocaleString("ru", {    maximumFractionDigits: 0, 
                                                                                     minimumFractionDigits: 0, 
                                                                                     useGrouping: false })}%)</div>
@@ -627,4 +632,5 @@ function showScale(statistics_list)
         
         container.appendChild(marker);
     }
+    
 }

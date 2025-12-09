@@ -211,17 +211,16 @@
     transition: all 0.1s ease;
 }
 
-.checkbox-input:hover 
-{
-    border-color: #bc194a;
-    box-shadow: 0 0 4px rgba(156, 0, 70, 0.3);
-}
-
 .checkbox-input:checked 
 {
     background-color: #4caf50;
     border-color: #4caf50;
     box-shadow: 0 0 2px rgba(76,175,80,0.6);
+}
+
+.checkbox-input:hover 
+{
+    border-color: #ffffff;
 }
 
 .select-input 
@@ -304,10 +303,16 @@
     height: 30px;
 }
 
+.panel-button:disabled
+{
+    background-color: #803030;
+    color: rgb(124, 124, 124);
+}
+
 
 .interpretation-card
 {
-    background: #282828d3;
+    background: #282828a6;
 
     margin: 10px;
 
@@ -340,10 +345,10 @@
 
 .text-result-name
 {
-    padding: 10px;
+    padding: 5px;
 
     color: white;
-    font-size: 15px;
+    font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
 
@@ -354,10 +359,10 @@
 
 .text-result-value
 {
-    padding: 10px;
+    padding: 5px;
 
     color: white;
-    font-size: 15px;
+    font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     
@@ -498,6 +503,14 @@
     top: -34px;
     transform: translateX(-50%);
     text-align: center;
+
+    transition: all .15s ease;
+}
+
+.scale-marker:hover
+{
+    scale: 1.1;
+    transform: translate(-45%, -8%);
 }
 
 .marker-line 
@@ -510,6 +523,9 @@
 
 .algorithm-name 
 {
+    position: relative;
+    top: -50px;
+
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 2px;
@@ -518,6 +534,7 @@
 
 .algorithm-value 
 {
+    visibility: hidden;
     font-size: 11px;
     color: #666;
     font-weight: bold;
