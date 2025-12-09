@@ -120,8 +120,8 @@ class UserInterface:
         # Plot logic by LeoGNZV
         def plot_from_y_dict(
             y_data_dict: Dict[str, List[float]],
-            title: str = "График функций",
-            x_label: str = "Этап",
+            title: str = "График сахаристости по этапам переработки",
+            x_label: str = "",
             y_label: str = "Сахаристость свёклы",
             colors: Optional[List[str]] = None,
             modes: Optional[Union[str, List[str]]] = None,
@@ -281,7 +281,29 @@ class UserInterface:
                 fig.update_xaxes(showgrid=False, zeroline=False)
                 fig.update_yaxes(showgrid=False, zeroline=False)
             
-            fig.write_html(way_saving_path)
+            html = fig.to_html(include_plotlyjs="cdn", full_html=True, config={"responsive": True})
+
+            injected = """
+            <style>
+            html, body {overflow:hidden !important; margin:0; padding:0;}
+            .plot-container, .js-plotly-plot, .plotly {
+                width:100% !important; height:100% !important; overflow:hidden !important;
+            }
+            </style>
+            <script>
+            let rt;
+            window.addEventListener("resize", () => {
+                clearTimeout(rt);
+                rt = setTimeout(() => {
+                    Plotly.Plots.resize(document.querySelector('.js-plotly-plot'));
+                }, 50);
+            });
+            </script>
+            """
+            html = html.replace("</head>", injected + "</head>")
+            
+            with open(way_saving_path, "w", encoding="utf-8") as f:
+                f.write(html)
 
         # Calling plot generation
         plot_from_y_dict(results.statistics, way_saving_path = self.userDataPath + "/plot.html")
