@@ -9,9 +9,9 @@ class Preprocessor:
            
     # Processes input data coming from the UI and stores it inside of the core
     @staticmethod
-    def run_preprocessing(input_data : Input, core):
+    def run_preprocessing(input_data : Input, core) -> Data:
         
-        data : Data = core.data
+        data : Data = Data()
 
         data.n = input_data.n
         data.m = input_data.m
@@ -43,6 +43,9 @@ class Preprocessor:
         #     print("\n")
 
         data.matrix = c_matrix
+        
+        return data
+        
 
     @staticmethod
     def generate_ripening(input_data : Input, b_matrix):

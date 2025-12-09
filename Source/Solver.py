@@ -20,8 +20,8 @@ class Solver:
 
     # Runs algorithms
     @staticmethod
-    def run_solver(core):
-        data: Data = core.data
+    def run_solver(in_data : Data) -> Data:
+        data: Data = in_data
         algorithms_runs = [
             BkJ.BkJAlgorithm.run,
             CTGAlgorithm.CTGAlgorithm.run,
@@ -38,6 +38,8 @@ class Solver:
             run(data)
             end_time = perf_counter()
             #print(f"{str(run)[10:].split()[0][:-4]} time: {end_time - start_time:.6f} seconds")
+            
+        return data
 
 
 class DataContainer:  # class used for Solver testing
