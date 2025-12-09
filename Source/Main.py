@@ -11,8 +11,8 @@ from Core import Core
 
 # Main function
 def main():
-    print("Hello world!")
     core : Core = Core()
+    core.init_ui()
 
 if __name__ == "__main__":
     main()

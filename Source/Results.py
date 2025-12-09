@@ -1,18 +1,17 @@
 from Data import Data, Statistics
 from AlgorithmNames import AlgorithmNames
 
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, field
 
 @dataclass
 class Results:
     
     # Some results that are going to be sent back to the UI for display
-    statistics : Statistics = field(default_factory=Statistics)
     
-    best_strategy : AlgorithmNames = AlgorithmNames.GREEDY
-    worst_strategy : AlgorithmNames = AlgorithmNames.GREEDY
+    # Final results statistics should be in a sorted order
+    statistics_list : list[list[str, float]] = field(default_factory=list)
+    statistics : dict[str : list[float]] = field(default_factory=dict)
     
-    # Converts results structure into a dict for sending
-    def dict(self) -> dict:
-        return {k: str(v) for k, v in asdict(self).items()}
+    best_strategy : str = "GREEDY"
+    worst_strategy : str = "GREEDY"
 

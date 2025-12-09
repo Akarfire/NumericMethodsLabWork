@@ -9,9 +9,9 @@ class Preprocessor:
            
     # Processes input data coming from the UI and stores it inside of the core
     @staticmethod
-    def run_preprocessing(input_data : Input, core):
+    def run_preprocessing(input_data : Input, core) -> Data:
         
-        data : Data = core.data
+        data : Data = Data()
 
         data.n = input_data.n
         data.m = input_data.m
@@ -21,6 +21,7 @@ class Preprocessor:
         data.thrifty_greedy_stage = input_data.thrifty_greedy_stage
         data.bkj_rank = input_data.bkj_rank
         data.bkj_stage = input_data.bkj_stage
+        data.ctg_stage = input_data.ctg_stage
 
         # initial values
         a_values = Preprocessor.generate_initial_values(input_data)
@@ -36,12 +37,15 @@ class Preprocessor:
         if (input_data.use_non_organics):
             c_matrix = Preprocessor.generate_non_organics(input_data, c_matrix)
 
-        for i in range(input_data.n):
-            for j in range(input_data.n):
-                print(f"{c_matrix[i][j]:.3f}", end=" ")
-            print("\n")
+        # for i in range(input_data.n):
+        #     for j in range(input_data.n):
+        #         print(f"{c_matrix[i][j]:.3f}", end=" ")
+        #     print("\n")
 
         data.matrix = c_matrix
+        
+        return data
+        
 
     @staticmethod
     def generate_ripening(input_data : Input, b_matrix):

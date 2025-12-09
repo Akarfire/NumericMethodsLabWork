@@ -1,12 +1,275 @@
 <!DOCTYPE html>
 
+<template id="text-result-entry-template">
+
+    <div class="text-result-line">
+        <p class="text-result-name">Algorithm: </p>
+        <p class="text-result-value">2825</p>
+    </div>
+
+</template>
+
 <html>
     <head>
 
+        <meta charset="UTF-8" />
+        <title>Numeric Methods Lab</title>
+
+        <link rel="stylesheet" href="NumericLab.css">
+        <script type="text/javascript" src="NumericLab.js"></script>
+
     </head>
 
-    <body>
-        <p>Numeric Methods Lab Work</p>
-    </body>
+    <body class="bg">
+        
+        <div class="tabs-container">
+        </div>
 
+        <div id="content-container">
+            <div id="left-panel">
+                <div id="options-container">
+                    
+                    <div class="options-card" id="general-card">
+                        <p class="card-title">Основные Настройки</p>
+
+                        <section class="options-section">
+                        <div class="option">
+                            <p class="option-text">Количество экспериментов</p>
+                            <div class="input-div">
+                                <input type="number" id="experiment_count_input" class="number-input" value="100" min="1" max="1000">
+                            </div>
+                        </div>
+
+                        <div class="option">
+                            <p class="option-text">Количество партий</p>
+                            <div class="input-div">
+                                <input type="number" id="n_input" class="number-input" value="15" min="4" max="100">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Масса одной партии</p>
+                            <div class="input-div">
+                                <input type="number" id="m_input" class="number-input" value="3000" min="1" max="10000" step="10">
+                            </div>
+                        </div>
+
+                        <div class="option">              
+                            <p class="option-text">Начальная сахаристость</p>
+                            <div class="input-div">
+                                <input type="number" id="a_min_input" class="number-input" value="0.12" min="0" max="1" step="0.01">
+                                <input type="number" id="a_max_input" class="number-input" value="0.22" min="0" max="1" step="0.01">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Коэффициенты деградации</p>
+                            <div class="input-div">
+                                <input type="number" id="b_min_input" class="number-input" value="0.85" min="0" max="1" step="0.01">
+                                <input type="number" id="b_max_input" class="number-input" value="1"    min="0" max="1" step="0.01">
+                            </div>
+                        </div>
+                        </section>
+
+                        <section class="options-section">
+                        <!-- <details>
+                            <summary>Дополнительные настройки коэффициентов деградации</summary> -->
+                        <div class="option">
+                            <p class="option-text">Режим коэффициентов деградации</p>
+                            <div class="input-div">
+                                <select id="degradation_mode_input" class="select-input">
+                                    <option value="UNIFORM" selected>Равномерный</option>
+                                    <option value="CONCENTRATED">Концентрированный</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Диапазон концентрированной деградации</p>
+                            <div class="input-div">
+                                <input type="number" id="concentrated_range_fraction_input" class="number-input" value="0.25" min="0" max="1" step="0.01">
+                            </div>
+                        </div>
+                        </section>
+                        <!-- </details> -->
+
+                        <!-- <section class="options-section">
+                        <div class="option">
+                            <input type="checkbox" id="use_individual_ranges_input">
+                            <p class="option-text">Использовать индивидуальные диапазоны</p>
+                        </div>
+                        <div class="option">
+                            <input type="button" id="individual-ranges-button">
+                            <p class="option-text">Настроить индивидуальные диапазоны</p>
+                        </div>
+                        </section> -->
+                    </div>
+
+                    <div class="options-card" id="additional-card">
+                        <p class="card-title">Дополнительные Настройки</p>
+
+                        <!-- <div class="option">
+                            <input type="checkbox" id="show-additional-options-checkbox">
+                            <p class="option-text">Показать</p>
+                        </div> -->
+
+                        <div class="option">
+                            <p class="option-text">Стадия Жадно-Бережливого алгоритма</p>
+                            <div class="input-div">
+                                <input type="number" id="greedy_thrifty_stage_input" class="number-input" value="5" min="2" max="100">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Стадия Бережливо-Жадного алгоритма</p>
+                            <div class="input-div">
+                                <input type="number" id="thrifty_greedy_stage_input" class="number-input" value="5" min="2" max="100">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Стадия алгоритма БКЖ</p>
+                            <div class="input-div">
+                                <input type="number" id="bkj_stage_input" class="number-input" value="5" min="1" max="100">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Ранг алгоритма БКЖ</p>
+                            <div class="input-div">
+                                <input type="number" id="bkj_rank_input" class="number-input" value="2" min="1" max="10">
+                            </div>
+                        </div>
+                        <div class="option">
+                            <p class="option-text">Стадия алгоритма CTG</p>
+                            <div class="input-div">
+                                <input type="number" id="ctg_stage_input" class="number-input" value="5" min="1" max="100">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="options-card" id="non-organic-card">
+                        <p class="card-title">Неорганические Вещества</p>
+
+                        <div class="option">
+                            <input type="checkbox" class="checkbox-input" id="use-non-organics-checkbox">
+                            <p class="option-text">Учитывать неорганические в-ва</p>
+                        </div>
+
+                        <div class="option">              
+                            <p class="option-text">Диапазон Калия</p>
+                            <div class="input-div">
+                                <input type="number" id="k_min_input" class="number-input" value="4.8" min="0" max="100" step="0.1">
+                                <input type="number" id="k_max_input" class="number-input" value="7.05"  min="0" max="100" step="0.1">
+                            </div>
+                        </div>
+                        <div class="option">              
+                            <p class="option-text">Диапазон Натрия</p>
+                            <div class="input-div">
+                                <input type="number" id="na_min_input" class="number-input" value="0.21" min="0" max="100" step="0.1">
+                                <input type="number" id="na_max_input" class="number-input" value="0.81"  min="0" max="100" step="0.1">
+                            </div>
+                        </div>
+                        <div class="option">              
+                            <p class="option-text">Диапазон Азота</p>
+                            <div class="input-div">
+                                <input type="number" id="n_min_input" class="number-input" value="1.58" min="0" max="100" step="0.1">
+                                <input type="number" id="n_max_input" class="number-input" value="2.8"  min="0" max="100" step="0.1">
+                            </div>
+                        </div>
+                        <div class="option">              
+                            <p class="option-text">Диапазон I</p>
+                            <div class="input-div">
+                                <input type="number" id="reduce_min_input" class="number-input" value="0.62" min="0" max="1" step="0.01">
+                                <input type="number" id="reduce_max_input" class="number-input" value="0.64"  min="0" max="1" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options-card" id="ripening-card">
+                        <p class="card-title">Дозаривание</p>
+
+                        <div class="option">
+                            <input type="checkbox" class="checkbox-input" id="use-ripening-checkbox">
+                            <p class="option-text">Учитывать дозаривание</p>
+                        </div>
+
+                        <div class="option">
+                            <p class="option-text">Число стадий дозаривания</p>
+                            <div class="input-div">
+                                <input type="number" id="ripening_stages_input" class="number-input" value="5" min="1" max="100">
+                            </div>
+                        </div>
+
+                        <div class="option">              
+                            <p class="option-text">Диапазон дозаривания</p>
+                            <div class="input-div">
+                                <input type="number" id="ripening_min_input" class="number-input" value="1" min="1" max="2" step="0.01">
+                                <input type="number" id="ripening_max_input" class="number-input" value="1.15"  min="1" max="2" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+        
+                </div>
+
+                <div class="button-panel">
+                    <button id="run-button" class="panel-button">Старт!</button>
+                    <!-- <input type="button" class="panel-button" title="Старт" > -->
+                </div>
+
+            </div>
+
+            <div id="content-divider" class="divider-vertical"></div>
+
+            <div id="results-container">
+
+                <div id="plot-container">
+                    <iframe id="plot-frame" class="plot-frame"></iframe>
+                    <div id="plot-iframe-overlay"></div>
+                
+                    <div class="scale-container">
+                        <div class="scale">
+                            <div class="scale-line"></div>
+                            
+                            <div class="scale-endpoint scale-start">0%</div>
+                            <div class="scale-endpoint scale-end">100%</div>
+                            
+                            <div id="algorithm-markers"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="results-divider" class="divider-horizontal"></div>
+
+                <div id="interpretation-container">
+                
+                    <div class="interpretation-card" style="width:75%">
+                        <p class="card-title">
+                            Результаты работы алгоритмов
+                        </p>                        
+                        <div id="text-results-container">
+                        </div>
+
+                    </div>
+                    <div class="interpretation-card">
+                        <p class="card-title">
+                            Рекомендации
+                        </p>
+                        <p class="recommendation-text" id="recommendation-text" style="visibility: hidden;">
+                            Для указанных входных данных рекомендуется использовать 
+                            <span class="recommended-algorithm-text" id="recommended-algorithm-text">
+                                Жадный
+                            </span> 
+                            алгоритм!
+                        </p>
+                        <p class="recommendation-text" id="bad-text" style="visibility: hidden;">
+                            Хуже всего себя показал 
+                            <span class="bad-algorithm-text" id="bad-algorithm-text">
+                                Жадный
+                            </span> 
+                            алгоритм!
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </body>
 </html>

@@ -194,3 +194,5 @@ cython_debug/
 
 /Electron/node_modules
 Electron/package-lock.json
+/Electron/python/Scripts
+/Electron/python/share
