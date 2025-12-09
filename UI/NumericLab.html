@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 
+<template id="text-result-entry-template">
+
+    <div class="text-result-line">
+        <p class="text-result-name">Algorithm: </p>
+        <p class="text-result-value">2825</p>
+    </div>
+
+</template>
+
 <html>
     <head>
 
@@ -31,10 +40,10 @@
 
                         <div class="option">
                             <p class="option-text">Количество партий</p>
-                            <input type="number" id="n_input" class="number-input" value="15" min="1" max="100">
+                            <input type="number" id="n_input" class="number-input" value="15" min="4" max="100">
                         </div>
                         <div class="option">
-                            <p class="option-text">m</p>
+                            <p class="option-text">Масса одной партии</p>
                             <input type="number" id="m_input" class="number-input" value="3000" min="1" step="0.25">
                         </div>
 
@@ -85,10 +94,10 @@
                     <div class="options-card" id="additional-card">
                         <p class="card-title">Дополнительные Настройки</p>
 
-                        <div class="option">
+                        <!-- <div class="option">
                             <input type="checkbox" id="show-additional-options-checkbox">
                             <p class="option-text">Показать</p>
-                        </div>
+                        </div> -->
 
                         <div class="option">
                             <p class="option-text">Стадия Жадно-Бережливого алгоритма</p>
@@ -159,7 +168,7 @@
                         <div class="option">              
                             <p class="option-text">Диапазон дозаривания</p>
                             <input type="number" id="ripening_min_input" class="number-input" value="1" min="1" max="2" step="0.01">
-                            <input type="number" id="ripening_max_input" class="number-input" value="1.15"  min="1" max="2" step="0.95">
+                            <input type="number" id="ripening_max_input" class="number-input" value="1.15"  min="1" max="2" step="0.01">
                         </div>
                     </div>
         
@@ -176,18 +185,51 @@
             <div id="results-container">
 
                 <div id="plot-container">
-                    
+                    <iframe id="plot-frame" class="plot-frame"></iframe>
+                    <div id="plot-iframe-overlay"></div>
+                
+                    <div class="scale-container">
+                        <div class="scale">
+                            <div class="scale-line"></div>
+                            
+                            <div class="scale-endpoint scale-start">0%</div>
+                            <div class="scale-endpoint scale-end">100%</div>
+                            
+                            <div id="algorithm-markers"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="results-divider" class="divider-horizontal"></div>
 
                 <div id="interpretation-container">
                 
-                    <div class="interpretation-card">
-                        Text Results
+                    <div class="interpretation-card" style="width:75%">
+                        <p class="card-title">
+                            Результаты работы алгоритмов
+                        </p>                        
+                        <div id="text-results-container">
+                        </div>
+
                     </div>
                     <div class="interpretation-card">
-                        Recommendations
+                        <p class="card-title">
+                            Рекомендации
+                        </p>
+                        <p class="recommendation-text" id="recommendation-text" style="visibility: hidden;">
+                            Для указанных входных данных рекомендуется использовать 
+                            <span class="recommended-algorithm-text" id="recommended-algorithm-text">
+                                Жадный
+                            </span> 
+                            алгоритм!
+                        </p>
+                        <p class="recommendation-text" id="bad-text" style="visibility: hidden;">
+                            Хуже всего себя показал 
+                            <span class="bad-algorithm-text" id="bad-algorithm-text">
+                                Жадный
+                            </span> 
+                            алгоритм!
+                        </p>
                     </div>
 
                 </div>
