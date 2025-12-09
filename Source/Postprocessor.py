@@ -32,6 +32,7 @@ class Postprocessor:
         for algorithm, value in statistics_list:
             
             if algorithm == "HUNGARIAN": continue
+            if algorithm == "MINIMAL": continue
             
             if value > max_value:
                 results.best_strategy = algorithm
