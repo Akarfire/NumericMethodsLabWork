@@ -256,7 +256,10 @@ class UserInterface:
                     xanchor='left',
                     yanchor='top',
                 ),
-                hovermode='closest'
+                hovermode='closest',
+                hoverlabel=dict(
+                    bgcolor="rgba(0, 0, 0, 0.8)",
+                )
             )
             
             # Настройка осей
@@ -289,6 +292,17 @@ class UserInterface:
             .plot-container, .js-plotly-plot, .plotly {
                 width:100% !important; height:100% !important; overflow:hidden !important;
             }
+            
+            .hoverlayer g.hovertext rect {
+                fill: rgba(0,0,0,0.85) !important;
+                stroke: rgba(255,255,255,0.06) !important;
+            }
+            
+            .hoverlayer .hoverlabel, .hoverlayer .hoverlabel * {
+                background-color: rgba(0,0,0,0.85) !important;
+                color: white !important;
+            }
+            
             </style>
             <script>
             let rt;
