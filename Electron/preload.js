@@ -12,3 +12,8 @@ contextBridge.exposeInMainWorld("py", {
         pythonListeners.push(fn);   // register but DO NOT add IPC listener repeatedly
     }
 });
+
+contextBridge.exposeInMainWorld("backend", {
+    loadHtml: () => ipcRenderer.invoke("load-html"),
+    getHtmlPath: () => ipcRenderer.invoke("get-html-path")
+});

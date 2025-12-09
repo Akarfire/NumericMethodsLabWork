@@ -2,6 +2,7 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require("fs");
 
 
 let backend;
@@ -50,6 +51,7 @@ function createWindow()
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
+            webSecurity: false,
             preload: __dirname + "/preload.js"
         }
     });
@@ -61,9 +63,8 @@ function createWindow()
 
     win.loadFile(ui_file);
 
-    // Running backedn
+    // Running backend
     backend = runEmbeddedPython("Main.py", [], win);
-
 
     backend.stdout.on("data", data => {
         debugMessage(data.toString());
@@ -85,6 +86,21 @@ function createWindow()
 
     ipcMain.on("toPython", (_, msg) => {
         backend.stdin.write(JSON.stringify(msg) + "\n");
+    });
+
+    // User-data folder setup
+    const userDataPath = app.getPath("userData");
+    backend.stdin.write(JSON.stringify({"user_data_path" : userDataPath}) + "\n");
+
+    // Setting up plot fetching pass through
+    const htmlPath = path.join(app.getPath("userData"), "plot.html");
+    ipcMain.handle("load-html", () => {
+        return fs.readFileSync(htmlPath, "utf8");
+    });
+
+    const htmlOutputPath = path.join(app.getPath("userData"), "plot.html");
+    ipcMain.handle("get-html-path", () => {
+        return htmlOutputPath;
     });
 }
 
