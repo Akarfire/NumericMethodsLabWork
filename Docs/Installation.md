@@ -13,5 +13,6 @@ All commands must be run inside of the `Electron` subfolder.
 `./python/python.exe -m pip install numpy`
 
 `./python/python.exe -m pip install scipy`
-``
+
+`./python/python.exe -m pip install plotly`
 
