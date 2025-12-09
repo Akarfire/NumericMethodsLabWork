@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="option">
-                            <p class="option-text">Масса одной партии</p>
+                            <p class="option-text">Масса одной партии (кг)</p>
                             <div class="input-div">
                                 <input type="number" id="m_input" class="number-input" value="3000" min="1" max="10000" step="10">
                             </div>
@@ -217,17 +217,19 @@
             <div id="content-divider" class="divider-vertical"></div>
 
             <div id="results-container">
-
                 <div id="plot-container">
+
+                    <img src="Images/LoadingGIF.gif" id="loading-gif">
+
                     <iframe id="plot-frame" class="plot-frame"></iframe>
                     <div id="plot-iframe-overlay"></div>
                 
-                    <div class="scale-container">
+                    <div class="scale-container" id="scale-container">
                         <div class="scale">
                             <div class="scale-line"></div>
                             
-                            <div class="scale-endpoint scale-start">0%</div>
-                            <div class="scale-endpoint scale-end">100%</div>
+                            <!-- <div class="scale-endpoint scale-start">0%</div>
+                            <div class="scale-endpoint scale-end">100%</div> -->
                             
                             <div id="algorithm-markers"></div>
                         </div>
@@ -250,20 +252,22 @@
                         <p class="card-title">
                             Рекомендации
                         </p>
-                        <p class="recommendation-text" id="recommendation-text" style="visibility: hidden;">
-                            Для указанных входных данных рекомендуется использовать 
-                            <span class="recommended-algorithm-text" id="recommended-algorithm-text">
-                                Жадный
-                            </span> 
-                            алгоритм!
-                        </p>
-                        <p class="recommendation-text" id="bad-text" style="visibility: hidden;">
-                            Хуже всего себя показал 
-                            <span class="bad-algorithm-text" id="bad-algorithm-text">
-                                Жадный
-                            </span> 
-                            алгоритм!
-                        </p>
+                        <div id="recommendation-container">
+                            <p class="recommendation-text" id="recommendation-text">
+                                Для указанных входных данных рекомендуется использовать 
+                                <span class="recommended-algorithm-text" id="recommended-algorithm-text">
+                                    Жадный
+                                </span> 
+                                алгоритм!
+                            </p>
+                            <p class="recommendation-text" id="bad-text">
+                                Хуже всего себя показал 
+                                <span class="bad-algorithm-text" id="bad-algorithm-text">
+                                    Жадный
+                                </span> 
+                                алгоритм!
+                            </p>
+                        </div>
                     </div>
 
                 </div>

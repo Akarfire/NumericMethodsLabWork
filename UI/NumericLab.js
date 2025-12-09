@@ -15,10 +15,7 @@ const minInterpretationHeight = 100;
 let contentSplitWidth = 0;
 let resultsSplitHeight = 0;
 
-let isScaleHovered = false;
-let scaleMarkers = new Array();
-
-let algorithmTextResults = new Array();
+let isLoading = false;
 
 let inputData = {
 
@@ -415,8 +412,27 @@ function setupButtonsPanel()
 {
     const runButton = document.getElementById("run-button");
     runButton.addEventListener("click", () => {
-        if (isInputCorrect)
-            window.py.send({ "input_data" : inputData });
+        if (isInputCorrect && !isLoading)
+        {
+            const loadingImg = document.getElementById("loading-gif");
+            loadingImg.style.opacity = "0.5";
+
+            const scaleContainer = document.getElementById("scale-container");
+            scaleContainer.style.opacity = "0";
+
+            const plotFrame = document.getElementById("plot-frame");
+            plotFrame.style.opacity = "0";
+
+            const text_results_container = document.getElementById("text-results-container");
+            text_results_container.style.opacity = "0.0";
+
+            const recommendation_container = document.getElementById("recommendation-container");
+            recommendation_container.style.opacity = "0.0";
+
+            setTimeout(() => {
+                 window.py.send({ "input_data" : inputData });
+            }, 450);
+        }
     });
 }
 
@@ -529,6 +545,15 @@ function showResults(results)
     for (let i = 0; i < existing_lines.length; i++)
         existing_lines[i].remove();
 
+    let min = 10e10;
+    let max = -1;
+
+    for (let i = 0; i < results.statistics_list.length; i++)
+    {
+        if (results.statistics_list[i][1] < min) min = results.statistics_list[i][1];
+        if (results.statistics_list[i][1] > max) max = results.statistics_list[i][1];
+    }
+
     for (let i = 0; i < results.statistics_list.length; i++)
     {
         const algorithm_name = results.statistics_list[i][0];
@@ -544,13 +569,22 @@ function showResults(results)
         let text_result_value = clone.querySelector(".text-result-value");
 
         const result_number = value * inputData.m;
+        const percent_number = (value / max) * 100;
 
-        text_result_name.textContent = String(i) + ". " + algorithm_name;
-        text_result_value.textContent = result_number.toLocaleString("ru", {
-                maximumFractionDigits: 2,
-                minimumFractionDigits: 2,
+        const result_value_text = result_number.toLocaleString("ru", {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
                 useGrouping: false
             });
+
+        const percent_text = percent_number.toLocaleString("ru", {
+                maximumFractionDigits: 1,
+                minimumFractionDigits: 1,
+                useGrouping: false
+            });
+
+        text_result_name.textContent = String(i) + ". " + algorithm_name;
+        text_result_value.textContent = percent_text + "%" + "  :   " + result_value_text + " кг";
 
         // Appening message
         text_results_container.appendChild(clone);
@@ -561,19 +595,38 @@ function showResults(results)
     const rec_algorithm_text = document.getElementById("recommended-algorithm-text");
 
     rec_algorithm_text.textContent = results.best_strategy;
-    recommendation_text.style.visibility = "visible";
 
     const bad_text = document.getElementById("bad-text");
     const bad_algorithm_text = document.getElementById("bad-algorithm-text");
 
     bad_algorithm_text.textContent = results.worst_strategy;
-    bad_text.style.visibility = "visible";
 
     // Show scale
     showScale(results.statistics_list);
 
     // Showing plot
     showPlot();
+
+    const plotFrame = document.getElementById("plot-frame");
+    plotFrame.onload = function()
+    {
+        const loadingImg = document.getElementById("loading-gif");
+        loadingImg.style.opacity = "0";
+
+        const scaleContainer = document.getElementById("scale-container");
+        scaleContainer.style.opacity = "1.0";
+
+        const plotFrame = document.getElementById("plot-frame");
+        plotFrame.style.opacity = "1.0";
+
+        const text_results_container = document.getElementById("text-results-container");
+        text_results_container.style.opacity = "1.0";
+
+        const recommendation_container = document.getElementById("recommendation-container");
+        recommendation_container.style.opacity = "1.0";
+
+        isLoading = false;
+    }
 }
 
 async function showPlot() 
@@ -632,5 +685,4 @@ function showScale(statistics_list)
         
         container.appendChild(marker);
     }
-    
 }
