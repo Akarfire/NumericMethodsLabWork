@@ -12,4 +12,4 @@ class AlgorithmNames(Enum):
     CTG = 6
     MINIMAL = 7
     RANDOM = 8
-    AdaptiveThreshold = 9
+    FAST_ROTTING_FIRST = 9  # типа те кто быстрее всего гниют тех выбираем первыми
