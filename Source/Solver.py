@@ -14,6 +14,7 @@ from Algorithms import GreedyThriftyAlgorithm
 from Algorithms import MinimalAlgorithm
 from Algorithms import ThriftyAlgorithm
 from Algorithms import RandomAlgorithm
+from Algorithms import FastRottingFirst
 
 
 class Solver:
@@ -35,6 +36,7 @@ class Solver:
             ThriftyGreedyAlgorithm.ThriftyGreedyAlgorithm.run,
             MinimalAlgorithm.MinimalAlgorithm.run,
             RandomAlgorithm.RandomAlgorithm.run,
+            FastRottingFirst.FastRottingFirstAlgorithm.run,
         ]
 
         # Running algorithms
