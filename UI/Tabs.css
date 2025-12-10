@@ -26,6 +26,16 @@ body
     height: 50px;
     user-select: none;
     align-items: center;
+
+    overflow-x: auto;
+    overflow-y: none;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+#tab-container::-webkit-scrollbar 
+{
+    display: none;
 }
 
 .tab 
