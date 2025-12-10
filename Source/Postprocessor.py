@@ -20,7 +20,8 @@ class Postprocessor:
             AlgorithmNames.CTG : "CTG",
             AlgorithmNames.HUNGARIAN : "Венгерский",
             AlgorithmNames.MINIMAL : "Минимальный",
-            AlgorithmNames.RANDOM : "Случайный"
+            AlgorithmNames.RANDOM : "Случайный",
+            AlgorithmNames.FAST_ROTTING_FIRST : "БС"
         }
            
         results : Results = Results()

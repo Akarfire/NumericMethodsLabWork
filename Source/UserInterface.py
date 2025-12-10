@@ -255,10 +255,12 @@ class UserInterface:
                     y=1,
                     xanchor='left',
                     yanchor='top',
+                    font=dict(size=15)
                 ),
                 hovermode='closest',
                 hoverlabel=dict(
                     bgcolor="rgba(0, 0, 0, 0.8)",
+                    font=dict(size=15)
                 )
             )
             

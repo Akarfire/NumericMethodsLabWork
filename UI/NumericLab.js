@@ -29,7 +29,7 @@ let inputData = {
     "b_min" : 0.85,
     "b_max" : 1,
     
-    "degradation_mode" : "Uniform",
+    "degradation_mode" : "UNIFORM",
     "concentrated_range_fraction" : 0.25,
     
     "experiment_count" : 100,
