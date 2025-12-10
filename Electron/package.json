@@ -26,40 +26,46 @@
     },
 
     "build": {
-      "appId": "com.yourname.numericlab",
 
-      "productName": "NumericLab",
 
-      "files": [
-          "**/*",
-          "python/**",
-          "python-src/**",
-          "ui/**"
-      ],
+        "electronLanguages": ["en-US"],
 
-      "directories": {
-          "buildResources": "assets"
-      },
+        "appId": "com.yourname.numericlab",
 
-      "forceCodeSigning": false,
+        "productName": "NumericLab",
 
-      "win": {
-          "target": ["portable"]
-      },
+        "files": [
+            "**/*",
+            "!python/**"
+        ],
 
-      "extraResources": [
-        {
-            "from": "python/",
-            "to": "python/"
+        "directories": {
+            "buildResources": "assets"
         },
-        {
-            "from": "../Source/",
-            "to": "python-src/"
+
+        "forceCodeSigning": false,
+
+        "win": {
+            "target": ["portable"]
         },
-        {
-            "from": "../UI/",
-            "to": "ui/"
+
+        "extraResources": [
+            {
+                "from": "python/",
+                "to": "python/"
+            },
+            {
+                "from": "../Source/",
+                "to": "python-src/"
+            },
+            {
+                "from": "../UI/",
+                "to": "ui/"
+            }
+        ],
+
+        "extraMetadata": {
+            "electronDebug": false
         }
-      ]
     }
 }
