@@ -103,10 +103,10 @@ function handleWindowResize()
 
     contentSplitSetPercent(contentSplitWidth / content_containerWidth);
 
-    const results_divider = document.getElementById('results-divider');
-    const results_containerHeight = results_divider.parentElement.getBoundingClientRect().height;
+    // const results_divider = document.getElementById('results-divider');
+    // const results_containerHeight = results_divider.parentElement.getBoundingClientRect().height;
 
-    resultsSplitSetPercent(resultsSplitHeight / results_containerHeight);
+    // resultsSplitSetPercent(resultsSplitHeight / results_containerHeight);
 }
 
 // Content Split
@@ -140,7 +140,8 @@ function setupContentSplit()
         overlay.style.pointerEvents = "none";
     });
 
-    contentSplitSetPercent(0.3);
+    const containerWidth = divider.parentElement.getBoundingClientRect().width;
+    contentSplitSetPercent(minOptionsWidth / containerWidth);
 }
 
 function contentSplitSetPercent(width_percent)
@@ -434,6 +435,33 @@ function setupButtonsPanel()
             }, 450);
         }
     });
+
+    const ugButton = document.getElementById("ug-button");
+    ugButton.addEventListener("click", () => {
+
+        const ug_container = document.getElementById("user-guide-container");
+
+        ug_container.style.visibility = "visible";
+        ug_container.style.opacity = "1.0";
+
+        const plot_container = document.getElementById("plot-container");
+        plot_container.style.opacity = "0.0";
+    });
+
+    const ugCloseButton = document.getElementById("ug-close");
+    ugCloseButton.addEventListener("click", () => {
+
+        const ug_container = document.getElementById("user-guide-container");
+        ug_container.style.opacity = "0.0";
+
+        const plot_container = document.getElementById("plot-container");
+        plot_container.style.opacity = "1.0";
+
+        setTimeout( () => {
+            ug_container.style.visibility = "hidden";
+        }, 400 );
+        
+    });
 }
 
 function checkInputCorrectness()
@@ -445,12 +473,12 @@ function checkInputCorrectness()
     {
         const input = inputs[i];
 
-        const value = parseInt(input.value);
-        const min = parseInt(input.min);
-        const max = parseInt(input.max);
+        const value = parseFloat(input.value);
+        const min = parseFloat(input.min);
+        const max = parseFloat(input.max);
 
         if (value < min) 
-            {
+        {
             input.value = min;
             input.dispatchEvent(new Event("change", { bubbles: true }));
         }

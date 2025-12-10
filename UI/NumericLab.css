@@ -127,8 +127,8 @@
     background-color: #853649;
     cursor: col-resize;
     user-select: none;
-
-    z-index: 1001;
+/* 
+    z-index: 2; */
 }
 
 .divider-horizontal
@@ -138,8 +138,8 @@
     background-color: #853649;
     cursor: row-resize;
     user-select: none;
-
-    z-index: 1001;
+/* 
+    z-index: 2; */
 }
 
 
@@ -439,6 +439,9 @@
     align-items: center;
 
     margin-right: 25px;
+
+    opacity: 1.0;
+    transition: opacity 0.3s ease;
 }
 
 #loading-gif
@@ -452,10 +455,10 @@
     top: 50%;
     transform: translate(-50%, -50%);
 
-    z-index: 1005;
-
     opacity: 0;
     transition: opacity 0.4s ease;
+
+    pointer-events: none;
 }
 
 .plot-frame
@@ -469,6 +472,8 @@
 
     opacity: 0;
     transition: opacity 0.4s ease;
+
+    /* z-index: 2; */
 }
 
 #plot-iframe-overlay 
@@ -616,4 +621,137 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #f00861; 
+}
+
+
+#user-guide-container
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+    opacity: 0.0;
+    transition: opacity 0.4s ease;
+}
+
+.ug-bg
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    background-color: rgba(0, 0, 0, 0.649);
+
+    height: 100%;
+    width: 100%;
+
+    z-index: 2000;
+}
+
+.ug-container
+{
+    background-color: #1b1b1bf3;
+    border-radius: 10px;
+
+    padding: 70px 150px;
+
+    height: 65%;
+    width: 65%;
+
+    z-index: 2001;
+
+    position: relative;
+}
+
+.ug-text-container
+{
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+}
+
+.ug-title
+{
+    color: rgb(224, 224, 224);
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.ug-text
+{
+    color: rgb(224, 224, 224);
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ug-head
+{
+    color: rgb(224, 224, 224);
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.ug-head-two
+{
+    color: rgb(224, 224, 224);
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.ug-image
+{
+    align-self: center;
+    width: 25%;
+    height: auto;
+
+    display: block;
+    margin: 0 auto;
+}
+
+.ug-image-horizontal
+{
+    align-self: center;
+    height: 40%;
+    width: auto;
+
+    display: block;
+    margin: 0 auto;
+}
+
+.ug-close
+{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+
+    width: 20px;
+    height: 20px;
+
+    background-color: rgb(171, 51, 51);
+    
+    border: none;
+    border-radius: 10px;
+
+    transition: all 0.15s ease;
+
+    color: white;
+    text-align: center;
+    font-size: 15px;
+}
+
+.ug-close:hover
+{
+    background-color: rgb(215, 53, 53);
 }
