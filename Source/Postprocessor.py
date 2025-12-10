@@ -19,7 +19,8 @@ class Postprocessor:
             AlgorithmNames.BkJ : "БКЖ",
             AlgorithmNames.CTG : "CTG",
             AlgorithmNames.HUNGARIAN : "Венгерский",
-            AlgorithmNames.MINIMAL : "Минимальный"
+            AlgorithmNames.MINIMAL : "Минимальный",
+            AlgorithmNames.RANDOM : "Случайный"
         }
            
         results : Results = Results()
