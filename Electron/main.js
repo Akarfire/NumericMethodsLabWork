@@ -11,6 +11,9 @@ let mainWindow;
 let tabs = [];
 let activeTab = -1;
 
+let currentlyCommunicatingTabID = -1;
+let inputQueue = Array();
+
 
 function debugMessage(message)
 {
@@ -82,13 +85,16 @@ function createWindow()
     backend.stdout.on("data", data => {
 
         debugMessage(data.toString());
-        if (activeTab >= 0 && activeTab < tabs.length)
+        if (currentlyCommunicatingTabID >= 0 && currentlyCommunicatingTabID < tabs.length)
         {
             const message = data.toString();
 
             let lines = message.split("\n");
             for (let i = 0; i < lines.length; i++)
-                if (lines[i] !== "") tabs[activeTab].webContents.send("fromPython", lines[i]);
+                if (lines[i] !== "") tabs[currentlyCommunicatingTabID].webContents.send("fromPython", lines[i]);
+            
+            currentlyCommunicatingTabID = -1;
+            updateInputQueue();
         }
     });
 
@@ -101,7 +107,10 @@ function createWindow()
     });
 
     ipcMain.on("toPython", (_, msg) => {
-        backend.stdin.write(JSON.stringify(msg) + "\n");
+
+        inputQueue.push({"tab" : activeTab, "msg" : msg});
+
+        updateInputQueue();
     });
 
     // User-data folder setup
@@ -118,6 +127,17 @@ function createWindow()
     ipcMain.handle("get-html-path", () => {
         return htmlOutputPath;
     });
+}
+
+function updateInputQueue()
+{
+    if (inputQueue.length > 0 && currentlyCommunicatingTabID === -1)
+    {
+        entry = inputQueue.shift();
+
+        currentlyCommunicatingTabID = entry.tab;
+        backend.stdin.write(JSON.stringify(entry.msg) + "\n");
+    }
 }
 
 app.whenReady().then(() => {
