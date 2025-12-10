@@ -28,12 +28,12 @@ class UserInterface:
                 
                 if "user_data_path" in msg:
                     self.userDataPath = msg["user_data_path"]
-                    print(self.userDataPath)
+                    # print(self.userDataPath)
                     continue
                 
                 if "input_data" in msg:
                     input_data_dict = msg["input_data"]
-                    print(input_data_dict)
+                    # print(input_data_dict)
                     self.core.call_run(self.__convert_dict_to_input_data(input_data_dict))
                 
                 else:
@@ -255,10 +255,12 @@ class UserInterface:
                     y=1,
                     xanchor='left',
                     yanchor='top',
+                    font=dict(size=15)
                 ),
                 hovermode='closest',
                 hoverlabel=dict(
                     bgcolor="rgba(0, 0, 0, 0.8)",
+                    font=dict(size=15)
                 )
             )
             
@@ -284,7 +286,19 @@ class UserInterface:
                 fig.update_xaxes(showgrid=False, zeroline=False)
                 fig.update_yaxes(showgrid=False, zeroline=False)
             
-            html = fig.to_html(include_plotlyjs="cdn", full_html=True, config={"responsive": True})
+            config = {
+                "responsive": True,
+                "modeBarButtonsToRemove": [
+                    "select2d",
+                    "lasso2d",
+                    "hoverClosestCartesian",
+                    "hoverCompareCartesian",
+                    "toggleSpikelines",
+                    "autoScale"
+                ]
+            }
+            
+            html = fig.to_html(include_plotlyjs="cdn", full_html=True, config=config)
 
             injected = """
             <style>

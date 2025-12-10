@@ -35,9 +35,14 @@ class FastRottingFirstAlgorithm(Algorithm):
 
             i = 0
             for batch_ind in batches_left:
-                degradation_per_batch[batch_ind] += input_data.matrix[batch_ind][cur_stage] /\
-                                                    input_data.matrix[batch_ind][cur_stage - 1]
-                cur_stage_degrs[i] = degradation_per_batch[batch_ind] / cur_stage
+                if input_data.matrix[batch_ind][cur_stage - 1] == 0:
+                    degradation_per_batch[batch_ind] = float('inf')
+                if degradation_per_batch[batch_ind] == float('inf'):
+                    pass
+                else:
+                    degradation_per_batch[batch_ind] += input_data.matrix[batch_ind][cur_stage] /\
+                                                        input_data.matrix[batch_ind][cur_stage - 1]
+                    cur_stage_degrs[i] = degradation_per_batch[batch_ind] / cur_stage
                 i += 1
 
             # Contains pairs : [batch_degradation, batch_index]

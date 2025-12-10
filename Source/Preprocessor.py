@@ -37,6 +37,13 @@ class Preprocessor:
         if (input_data.use_non_organics):
             c_matrix = Preprocessor.generate_non_organics(input_data, c_matrix)
 
+        with open("matr.txt", "w") as f:
+            for i in range(input_data.n):
+                line = ""
+                for j in range(input_data.n):
+                    line += f"{c_matrix[i][j]:.3f} "
+                f.write(line + "\n")
+
         # for i in range(input_data.n):
         #     for j in range(input_data.n):
         #         print(f"{c_matrix[i][j]:.3f}", end=" ")
@@ -103,42 +110,61 @@ class Preprocessor:
         return values
    
     @staticmethod
-    def generate_degradation_values(input_data : Input):
-        b_matrix = [[0.0 for _ in range(input_data.n)] for _ in range(input_data.n)]
-        if (not input_data.use_individual_ranges):
-            if (input_data.degradation_mode == DegradationMode.UNIFORM):
-                for i in range(input_data.n):
-                    for j in range(input_data.n):
+    def generate_degradation_values(input_data: Input):
+        n = input_data.n
+        b_matrix = [[0.0 for _ in range(n)] for _ in range(n)]
+
+        # === Без индивидуальных диапазонов ===
+        if not input_data.use_individual_ranges:
+
+            # UNIFORM — всё было корректно
+            if input_data.degradation_mode == DegradationMode.UNIFORM:
+                for i in range(n):
+                    for j in range(n):
                         b_matrix[i][j] = np.random.uniform(input_data.b_min, input_data.b_max)
+
+            # CONCENTRATED — полностью исправлено
             else:
-                # generate range for each i
-                new_b_min = [0.0 for _ in range(input_data.n)]
                 delta = (input_data.b_max - input_data.b_min) * input_data.concentrated_range_fraction
                 right_border = input_data.b_max - delta
-                new_b_min = np.random.uniform(input_data.b_min, right_border, input_data.n)
-                
-                # generate b_matrix
-                for i in range(input_data.n):
-                    for j in range(input_data.n):
+
+                # каждый i получает СКАЛЯР, а не вектор
+                new_b_min = np.random.uniform(input_data.b_min, right_border, size=n)
+
+                for i in range(n):
+                    for j in range(n):
                         b_matrix[i][j] = np.random.uniform(new_b_min[i], new_b_min[i] + delta)
+
+        # === Индивидуальные диапазоны для каждой строки ===
         else:
-            if (input_data.degradation_mode == DegradationMode.UNIFORM):
-                for i in range(input_data.n):
-                    for j in range(input_data.n):
-                        b_matrix[i][j] = np.random.uniform(input_data.individual_b_ranges[i][0], input_data.individual_b_ranges[i][1])
+
+            # UNIFORM — ок
+            if input_data.degradation_mode == DegradationMode.UNIFORM:
+                for i in range(n):
+                    min_i, max_i = input_data.individual_b_ranges[i]
+                    for j in range(n):
+                        b_matrix[i][j] = np.random.uniform(min_i, max_i)
+
+            # CONCENTRATED — полностью исправлено
             else:
-                # generate range for each i
-                new_b_min = [0.0 for _ in range(input_data.n)]
-                for i in range(input_data.n):
-                    delta = (input_data.individual_b_ranges[i][1] - input_data.individual_b_ranges[i][0]) * input_data.concentrated_range_fraction
-                    right_border = input_data.individual_b_ranges[i][1] - delta
-                    new_b_min[i] = np.random.uniform(input_data.individual_b_ranges[i][0], right_border, input_data.n)
-                
-                # generate b_matrix
-                for i in range(input_data.n):
-                    for j in range(input_data.n):
-                        delta = (input_data.individual_b_ranges[i][1] - input_data.individual_b_ranges[i][0]) * input_data.concentrated_range_fraction
+                new_b_min = [0.0] * n
+
+                # сначала считаем диапазоны для каждой строки
+                for i in range(n):
+                    min_i, max_i = input_data.individual_b_ranges[i]
+                    delta = (max_i - min_i) * input_data.concentrated_range_fraction
+                    right_border = max_i - delta
+
+                    # СКАЛЯР, а не массив!
+                    new_b_min[i] = np.random.uniform(min_i, right_border)
+
+                # теперь генерируем b_matrix
+                for i in range(n):
+                    min_i, max_i = input_data.individual_b_ranges[i]
+                    delta = (max_i - min_i) * input_data.concentrated_range_fraction
+                    for j in range(n):
                         b_matrix[i][j] = np.random.uniform(new_b_min[i], new_b_min[i] + delta)
+
         return b_matrix
 
     def generate_c_matrix(input_data : Input, a_values, b_matrix):
