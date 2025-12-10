@@ -13,6 +13,7 @@ from Algorithms import CTGAlgorithm
 from Algorithms import GreedyThriftyAlgorithm
 from Algorithms import MinimalAlgorithm
 from Algorithms import ThriftyAlgorithm
+from Algorithms import RandomAlgorithm
 
 
 class Solver:
@@ -33,6 +34,7 @@ class Solver:
             ThriftyAlgorithm.ThriftyAlgorithm.run,
             ThriftyGreedyAlgorithm.ThriftyGreedyAlgorithm.run,
             MinimalAlgorithm.MinimalAlgorithm.run,
+            RandomAlgorithm.RandomAlgorithm.run,
         ]
 
         # Running algorithms

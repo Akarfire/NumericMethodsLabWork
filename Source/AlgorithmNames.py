@@ -11,3 +11,5 @@ class AlgorithmNames(Enum):
     BkJ = 5
     CTG = 6
     MINIMAL = 7
+    RANDOM = 8
+    AdaptiveThreshold = 9
