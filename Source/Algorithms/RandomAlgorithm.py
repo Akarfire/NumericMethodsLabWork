@@ -18,20 +18,13 @@ class RandomAlgorithm(Algorithm):
         stages = input_data.n
         sugarity_per_stage = list()
 
-        # Transpose the matrix for linear_sum_assignment
-        transposed_matrix = list()
-        for i in range(stages):
-            transposed_matrix.append(list())
-            for j in range(stages):
-                transposed_matrix[i].append(input_data.matrix[j][i])
-
         # Algorithm implementation
         row_ind = [i for i in range(input_data.n)]
         shuffle(row_ind)
 
         # Filling statistics
         for cur_stage in range(stages):
-            cur_c = transposed_matrix[row_ind[cur_stage]][cur_stage]
+            cur_c = input_data.matrix[cur_stage][cur_stage]
             if len(sugarity_per_stage) == 0:
                 sugarity_per_stage.append(cur_c)
             else:
