@@ -173,7 +173,6 @@ function createTab()
 
     tabs.push(view);
     switchTab(tabs.length - 1);
-    sendTabListToRenderer();
 }
 
 function switchTab(index) 
