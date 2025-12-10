@@ -3,6 +3,8 @@ body
     margin: 0; 
     overflow: hidden; 
     font-family: sans-serif; 
+
+    background-color: black;
 }
 
 #tab-bar 
