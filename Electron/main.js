@@ -56,6 +56,7 @@ function createWindow()
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
+        icon: path.join(__dirname, "assets", "icon.ico"),
         webPreferences: {
             zoomFactor: 0.9,
             nodeIntegration: false,

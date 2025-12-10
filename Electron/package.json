@@ -1,5 +1,5 @@
 {
-    "name": "numeric-lab",
+    "name": "decision-support-system",
 
     "version": "1.0.0",
 
@@ -30,9 +30,11 @@
 
         "electronLanguages": ["en-US"],
 
-        "appId": "com.yourname.numericlab",
+        "appId": "com.fiit.numericlab",
 
-        "productName": "NumericLab",
+        "productName": "DecisionSupportSystem",
+
+        "icon": "assets/icon.ico",
 
         "files": [
             "**/*",
