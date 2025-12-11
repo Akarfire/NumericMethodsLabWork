@@ -114,51 +114,40 @@ class Preprocessor:
         n = input_data.n
         b_matrix = [[0.0 for _ in range(n)] for _ in range(n)]
 
-        # === Без индивидуальных диапазонов ===
         if not input_data.use_individual_ranges:
 
-            # UNIFORM — всё было корректно
             if input_data.degradation_mode == DegradationMode.UNIFORM:
                 for i in range(n):
                     for j in range(n):
                         b_matrix[i][j] = np.random.uniform(input_data.b_min, input_data.b_max)
 
-            # CONCENTRATED — полностью исправлено
             else:
                 delta = (input_data.b_max - input_data.b_min) * input_data.concentrated_range_fraction
                 right_border = input_data.b_max - delta
 
-                # каждый i получает СКАЛЯР, а не вектор
                 new_b_min = np.random.uniform(input_data.b_min, right_border, size=n)
 
                 for i in range(n):
                     for j in range(n):
                         b_matrix[i][j] = np.random.uniform(new_b_min[i], new_b_min[i] + delta)
 
-        # === Индивидуальные диапазоны для каждой строки ===
         else:
 
-            # UNIFORM — ок
             if input_data.degradation_mode == DegradationMode.UNIFORM:
                 for i in range(n):
                     min_i, max_i = input_data.individual_b_ranges[i]
                     for j in range(n):
                         b_matrix[i][j] = np.random.uniform(min_i, max_i)
-
-            # CONCENTRATED — полностью исправлено
             else:
                 new_b_min = [0.0] * n
 
-                # сначала считаем диапазоны для каждой строки
                 for i in range(n):
                     min_i, max_i = input_data.individual_b_ranges[i]
                     delta = (max_i - min_i) * input_data.concentrated_range_fraction
                     right_border = max_i - delta
 
-                    # СКАЛЯР, а не массив!
                     new_b_min[i] = np.random.uniform(min_i, right_border)
 
-                # теперь генерируем b_matrix
                 for i in range(n):
                     min_i, max_i = input_data.individual_b_ranges[i]
                     delta = (max_i - min_i) * input_data.concentrated_range_fraction
